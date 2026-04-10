@@ -136,7 +136,7 @@ export function ModalEditarRecurringBooking({
             <ModalBody className="flex flex-col gap-y-4 mt-3">
               {/* Informações somente leitura */}
               <div className="flex items-center gap-2 bg-lightblue rounded-xl px-4 py-3 flex-wrap">
-                <HugeiconsIcon icon={IconeEsporte} size={15} className="text-maingreen" />
+                <HugeiconsIcon icon={IconeEsporte} size={15} className="text-brand" />
                 <span className="text-sm text-gray-600">{esporteNome}</span>
                 <span className="text-gray-300 mx-1">·</span>
                 <span className="text-sm font-medium text-gray-700">

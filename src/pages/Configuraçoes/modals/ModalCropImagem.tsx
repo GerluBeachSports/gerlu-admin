@@ -118,8 +118,8 @@ export function ModalCropImagem({ isOpen, onOpenChange, imageSrc, onUploadSucces
                   onChange={(v) => setZoom(v as number)}
                   classNames={{
                     track: 'bg-gray-200',
-                    filler: 'bg-maingreen',
-                    thumb: 'bg-maingreen',
+                    filler: 'bg-brand',
+                    thumb: 'bg-brand',
                   }}
                 />
                 {erro && <p className="text-xs text-red-500 text-center mt-1">{erro}</p>}
@@ -129,14 +129,14 @@ export function ModalCropImagem({ isOpen, onOpenChange, imageSrc, onUploadSucces
             <ModalFooter className="flex gap-3 pt-0">
               <Button
                 variant="bordered"
-                className="flex-1 rounded-xl font-semibold border-maingreen text-maingreen"
+                className="flex-1 rounded-xl font-semibold border-brand text-brand"
                 onPress={onClose}
                 isDisabled={uploading}
               >
                 Cancelar
               </Button>
               <Button
-                className="flex-1 rounded-xl bg-maingreen text-white font-semibold"
+                className="flex-1 rounded-xl bg-brand text-white font-semibold"
                 isLoading={uploading}
                 onPress={() => handleConfirmar(onClose)}
               >

@@ -148,7 +148,7 @@ export function ModalQuadra({ isOpen, onOpenChange, quadra, onSalvar }: Props) {
                           onClick={() => toggleEsporte(e.id)}
                           className={`px-3 py-1.5 rounded-full text-sm font-medium transition-all cursor-pointer
                             ${ativo
-                              ? 'bg-maingreen text-white'
+                              ? 'bg-brand text-white'
                               : 'bg-lightblue text-gray-600 hover:bg-lightblue/70'
                             }`}
                         >

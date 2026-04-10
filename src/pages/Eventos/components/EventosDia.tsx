@@ -43,12 +43,12 @@ function CardEvento({ evento, onClick }: CardEventoProps) {
 
   return (
     <button className="card-day" onClick={() => onClick(evento)}>
-      <div className="bg-maingreen rounded-t-2xl px-8 py-1.5 font-montserrat text-white">
+      <div className="bg-brand rounded-t-2xl px-8 py-1.5 font-montserrat text-white">
         <p className="text-center text-sm">
           {horaInicio} — {horaFim}
         </p>
       </div>
-      <div className="flex flex-col border-x-1 border-b-1 rounded-b-2xl border-maingreen justify-center py-2 px-1 gap-y-1">
+      <div className="flex flex-col border-x-1 border-b-1 rounded-b-2xl border-brand justify-center py-2 px-1 gap-y-1">
         <div className="flex gap-x-2 items-center">
           <HugeiconsIcon icon={UserCircleIcon} size={24} />
           <p className="text-sm">{evento.usuario.fullname}</p>
@@ -60,7 +60,7 @@ function CardEvento({ evento, onClick }: CardEventoProps) {
           </p>
         </div>
         {evento.include_sauna_pool && (
-          <p className="text-xs text-maingreen font-medium px-1">+ Sauna & Piscina</p>
+          <p className="text-xs text-brand font-medium px-1">+ Sauna & Piscina</p>
         )}
       </div>
     </button>
@@ -112,7 +112,7 @@ export function EventosDia({
           <button className="cursor-pointer" onClick={retrocederDomingo}>
             <HugeiconsIcon icon={CircleArrowLeft01Icon} />
           </button>
-          <p className="font-montserrat font-bold text-maingreen text-center">
+          <p className="font-montserrat font-bold text-brand text-center">
             {diaSemana}, {dataFormatada}
           </p>
           <button className="cursor-pointer" onClick={avancarDomingo}>

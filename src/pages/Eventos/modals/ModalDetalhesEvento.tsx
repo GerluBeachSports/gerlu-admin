@@ -100,7 +100,7 @@ export function ModalDetalhesEvento({
               {/* Imagem ou banner */}
               <div className="w-full h-36 rounded-xl overflow-hidden bg-gray-100 flex items-center justify-center">
                 {evento.booking_type === "full_venue" ? (
-                  <div className="flex flex-col items-center gap-2 text-maingreen">
+                  <div className="flex flex-col items-center gap-2 text-brand">
                     <HugeiconsIcon icon={WavingHand01Icon} size={40} />
                     <span className="text-sm font-semibold">Espaço Inteiro</span>
                   </div>
@@ -120,13 +120,13 @@ export function ModalDetalhesEvento({
 
               {/* Data */}
               <div className="flex items-center gap-2">
-                <HugeiconsIcon icon={Calendar01Icon} size={20} className="text-maingreen shrink-0" />
+                <HugeiconsIcon icon={Calendar01Icon} size={20} className="text-brand shrink-0" />
                 <span className="text-sm">{dataFormatada}</span>
               </div>
 
               {/* Horário */}
               <div className="flex items-center gap-2">
-                <HugeiconsIcon icon={Time02Icon} size={20} className="text-maingreen shrink-0" />
+                <HugeiconsIcon icon={Time02Icon} size={20} className="text-brand shrink-0" />
                 <span className="text-sm">
                   {horaInicio} — {horaFim}
                 </span>
@@ -135,19 +135,19 @@ export function ModalDetalhesEvento({
               {/* Usuário e telefone */}
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-2">
-                  <HugeiconsIcon icon={UserCircleIcon} size={20} className="text-maingreen shrink-0" />
+                  <HugeiconsIcon icon={UserCircleIcon} size={20} className="text-brand shrink-0" />
                   <span className="text-sm">{evento.usuario.fullname}</span>
                 </div>
                 <span className="text-gray-300">|</span>
                 <div className="flex items-center gap-2">
-                  <HugeiconsIcon icon={Call02Icon} size={20} className="text-maingreen shrink-0" />
+                  <HugeiconsIcon icon={Call02Icon} size={20} className="text-brand shrink-0" />
                   <span className="text-sm">{telefoneFormatado}</span>
                 </div>
               </div>
 
               {/* Tipo e quadra */}
               <div className="flex items-center gap-2">
-                <HugeiconsIcon icon={Location01Icon} size={20} className="text-maingreen shrink-0" />
+                <HugeiconsIcon icon={Location01Icon} size={20} className="text-brand shrink-0" />
                 <span className="text-sm">
                   {tipoLabel}
                   {evento.quadra?.name && ` — ${evento.quadra.name}`}
@@ -156,8 +156,8 @@ export function ModalDetalhesEvento({
 
               {/* Sauna + Piscina */}
               {evento.include_sauna_pool && (
-                <div className="bg-maingreen/10 rounded-xl px-4 py-2">
-                  <span className="text-sm text-maingreen font-medium">
+                <div className="bg-brand/10 rounded-xl px-4 py-2">
+                  <span className="text-sm text-brand font-medium">
                     + Sauna & Piscina incluídos
                   </span>
                 </div>
@@ -165,7 +165,7 @@ export function ModalDetalhesEvento({
 
               {/* Preço */}
               <div className="flex items-center gap-2">
-                <HugeiconsIcon icon={Money03Icon} size={20} className="text-maingreen shrink-0" />
+                <HugeiconsIcon icon={Money03Icon} size={20} className="text-brand shrink-0" />
                 <span className="text-sm font-semibold">{precoFormatado}</span>
               </div>
 
@@ -183,7 +183,7 @@ export function ModalDetalhesEvento({
                 Cancelar evento
               </Button>
               <Button
-                className="flex-1 rounded-xl bg-maingreen text-white font-semibold"
+                className="flex-1 rounded-xl bg-brand text-white font-semibold"
                 onPress={onClose}
               >
                 Ok

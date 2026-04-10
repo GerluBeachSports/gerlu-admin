@@ -97,7 +97,7 @@ export function ModalConfirmarEvento({
     <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="center" hideCloseButton>
       <ModalContent>
         <>
-          <ModalHeader className="bg-maingreen rounded-t-xl">
+          <ModalHeader className="bg-brand rounded-t-xl">
             <h2 className="text-white font-montserrat text-lg font-bold w-full text-center">
               Confirmar Evento
             </h2>
@@ -107,7 +107,7 @@ export function ModalConfirmarEvento({
             {/* Imagem da quadra ou banner de espaço inteiro */}
             <div className="w-full h-36 rounded-xl overflow-hidden bg-gray-100 flex items-center justify-center">
               {dados.booking_type === "full_venue" ? (
-                <div className="flex flex-col items-center gap-2 text-maingreen">
+                <div className="flex flex-col items-center gap-2 text-brand">
                   <HugeiconsIcon icon={WavingHand01Icon} size={40} />
                   <span className="text-sm font-semibold">Espaço Inteiro</span>
                 </div>
@@ -127,13 +127,13 @@ export function ModalConfirmarEvento({
 
             {/* Data */}
             <div className="flex items-center gap-2">
-              <HugeiconsIcon icon={Calendar01Icon} size={20} className="text-maingreen shrink-0" />
+              <HugeiconsIcon icon={Calendar01Icon} size={20} className="text-brand shrink-0" />
               <span className="text-sm">{dataFormatada}</span>
             </div>
 
             {/* Horário */}
             <div className="flex items-center gap-2">
-              <HugeiconsIcon icon={Time02Icon} size={20} className="text-maingreen shrink-0" />
+              <HugeiconsIcon icon={Time02Icon} size={20} className="text-brand shrink-0" />
               <span className="text-sm">
                 {horaInicio} — {horaFim}
               </span>
@@ -142,19 +142,19 @@ export function ModalConfirmarEvento({
             {/* Usuário e telefone */}
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-2">
-                <HugeiconsIcon icon={UserCircleIcon} size={20} className="text-maingreen shrink-0" />
+                <HugeiconsIcon icon={UserCircleIcon} size={20} className="text-brand shrink-0" />
                 <span className="text-sm">{dados.fullname}</span>
               </div>
               <span className="text-gray-300">|</span>
               <div className="flex items-center gap-2">
-                <HugeiconsIcon icon={Call02Icon} size={20} className="text-maingreen shrink-0" />
+                <HugeiconsIcon icon={Call02Icon} size={20} className="text-brand shrink-0" />
                 <span className="text-sm">{dados.telefoneFormatado}</span>
               </div>
             </div>
 
             {/* Tipo e quadra */}
             <div className="flex items-center gap-2">
-              <HugeiconsIcon icon={Location01Icon} size={20} className="text-maingreen shrink-0" />
+              <HugeiconsIcon icon={Location01Icon} size={20} className="text-brand shrink-0" />
               <span className="text-sm">
                 {tipoLabel}
                 {dados.quadraNome && ` — ${dados.quadraNome}`}
@@ -163,8 +163,8 @@ export function ModalConfirmarEvento({
 
             {/* Sauna + Piscina */}
             {dados.include_sauna_pool && (
-              <div className="bg-maingreen/10 rounded-xl px-4 py-2">
-                <span className="text-sm text-maingreen font-medium">
+              <div className="bg-brand/10 rounded-xl px-4 py-2">
+                <span className="text-sm text-brand font-medium">
                   + Sauna & Piscina incluídos
                 </span>
               </div>
@@ -172,7 +172,7 @@ export function ModalConfirmarEvento({
 
             {/* Preço */}
             <div className="flex items-center gap-2">
-              <HugeiconsIcon icon={Money03Icon} size={20} className="text-maingreen shrink-0" />
+              <HugeiconsIcon icon={Money03Icon} size={20} className="text-brand shrink-0" />
               <span className="text-sm font-semibold">{precoFormatado}</span>
             </div>
 
@@ -184,14 +184,14 @@ export function ModalConfirmarEvento({
           <ModalFooter className="flex gap-3">
             <Button
               variant="bordered"
-              className="flex-1 rounded-xl font-semibold border-maingreen text-maingreen"
+              className="flex-1 rounded-xl font-semibold border-brand text-brand"
               onPress={onVoltar}
               isDisabled={loading}
             >
               Voltar
             </Button>
             <Button
-              className="flex-1 rounded-xl bg-maingreen text-white font-semibold"
+              className="flex-1 rounded-xl bg-brand text-white font-semibold"
               isLoading={loading}
               onPress={handleConfirmar}
             >

@@ -101,7 +101,7 @@ export function ModalConfirmarAgendamento({ isOpen, onOpenChange, dados, onVolta
         <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="center" hideCloseButton>
             <ModalContent>
                 <>
-                    <ModalHeader className="bg-maingreen rounded-t-xl">
+                    <ModalHeader className="bg-brand rounded-t-xl">
                         <h2 className="text-white font-montserrat text-lg font-bold w-full text-center">
                             Confirmar Agendamento
                         </h2>
@@ -127,12 +127,12 @@ export function ModalConfirmarAgendamento({ isOpen, onOpenChange, dados, onVolta
                         {/* Data e hora */}
                         <div className="flex items-center gap-4">
                             <div className="flex items-center gap-2">
-                                <HugeiconsIcon icon={Calendar01Icon} size={20} className="text-maingreen shrink-0" />
+                                <HugeiconsIcon icon={Calendar01Icon} size={20} className="text-brand shrink-0" />
                                 <span className="text-sm">{dataFormatada}</span>
                             </div>
                             <span className="text-gray-300">|</span>
                             <div className="flex items-center gap-2">
-                                <HugeiconsIcon icon={Time02Icon} size={20} className="text-maingreen shrink-0" />
+                                <HugeiconsIcon icon={Time02Icon} size={20} className="text-brand shrink-0" />
                                 <span className="text-sm">
                                     {horaFormatada}
                                     <span className="text-gray-400 ml-1">
@@ -145,12 +145,12 @@ export function ModalConfirmarAgendamento({ isOpen, onOpenChange, dados, onVolta
                         {/* Usuário e telefone */}
                         <div className="flex items-center gap-4">
                             <div className="flex items-center gap-2">
-                                <HugeiconsIcon icon={UserCircleIcon} size={20} className="text-maingreen shrink-0" />
+                                <HugeiconsIcon icon={UserCircleIcon} size={20} className="text-brand shrink-0" />
                                 <span className="text-sm">{dados.fullname}</span>
                             </div>
                             <span className="text-gray-300">|</span>
                             <div className="flex items-center gap-2">
-                                <HugeiconsIcon icon={Call02Icon} size={20} className="text-maingreen shrink-0" />
+                                <HugeiconsIcon icon={Call02Icon} size={20} className="text-brand shrink-0" />
                                 <span className="text-sm">{dados.telefoneFormatado}</span>
                             </div>
                         </div>
@@ -158,19 +158,19 @@ export function ModalConfirmarAgendamento({ isOpen, onOpenChange, dados, onVolta
                         {/* Quadra e esporte */}
                         <div className="flex items-center gap-4">
                             <div className="flex items-center gap-2">
-                                <HugeiconsIcon icon={UserCircleIcon} size={20} className="text-maingreen shrink-0" />
+                                <HugeiconsIcon icon={UserCircleIcon} size={20} className="text-brand shrink-0" />
                                 <span className="text-sm">{dados.quadraNome}</span>
                             </div>
                             <span className="text-gray-300">|</span>
                             <div className="flex items-center gap-2">
-                                <HugeiconsIcon icon={iconeEsporte} size={20} className="text-maingreen shrink-0" />
+                                <HugeiconsIcon icon={iconeEsporte} size={20} className="text-brand shrink-0" />
                                 <span className="text-sm">{dados.esporteNome}</span>
                             </div>
                         </div>
 
                         {/* Preço */}
                         <div className="flex items-center gap-2">
-                            <HugeiconsIcon icon={Money03Icon} size={20} className="text-maingreen shrink-0" />
+                            <HugeiconsIcon icon={Money03Icon} size={20} className="text-brand shrink-0" />
                             <span className="text-sm font-semibold">{precoFormatado}</span>
                         </div>
 
@@ -182,14 +182,14 @@ export function ModalConfirmarAgendamento({ isOpen, onOpenChange, dados, onVolta
                     <ModalFooter className="flex gap-3">
                         <Button
                             variant="bordered"
-                            className="flex-1 rounded-xl font-semibold border-maingreen text-maingreen"
+                            className="flex-1 rounded-xl font-semibold border-brand text-brand"
                             onPress={onVoltar}
                             isDisabled={loading}
                         >
                             Voltar
                         </Button>
                         <Button
-                            className="flex-1 rounded-xl bg-maingreen text-white font-semibold"
+                            className="flex-1 rounded-xl bg-brand text-white font-semibold"
                             isLoading={loading}
                             onPress={handleConfirmar}
                         >

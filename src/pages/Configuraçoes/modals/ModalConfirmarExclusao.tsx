@@ -44,7 +44,7 @@ export function ModalConfirmarExclusao({ isOpen, onOpenChange, nomeQuadra, onCon
             <ModalFooter className="flex gap-3">
               <Button
                 variant="bordered"
-                className="flex-1 rounded-xl font-semibold border-maingreen text-maingreen"
+                className="flex-1 rounded-xl font-semibold border-brand text-brand"
                 onPress={onClose}
                 isDisabled={loading}
               >

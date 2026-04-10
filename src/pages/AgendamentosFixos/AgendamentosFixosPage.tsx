@@ -95,24 +95,24 @@ function CardFixo({
     <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 flex flex-col gap-3">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-xs font-bold text-white bg-maingreen rounded-full px-3 py-1">
+          <span className="text-xs font-bold text-white bg-brand rounded-full px-3 py-1">
             {DIAS_COMPLETOS[booking.day_of_week]}
           </span>
           <div className="flex items-center gap-1 text-xs text-gray-500">
-            <HugeiconsIcon icon={Time02Icon} size={13} className="text-maingreen" />
+            <HugeiconsIcon icon={Time02Icon} size={13} className="text-brand" />
             {formatarHorario(booking.start_time)} – {formatarHorario(booking.end_time)}
           </div>
           <div className="flex items-center gap-1 text-xs text-gray-500">
-            <HugeiconsIcon icon={IconeEsporte} size={13} className="text-maingreen" />
+            <HugeiconsIcon icon={IconeEsporte} size={13} className="text-brand" />
             {esporteNome}
           </div>
         </div>
         <div className="flex items-center gap-1.5 shrink-0">
           <button
             onClick={onEditar}
-            className="w-7 h-7 rounded-full bg-maingreen/10 hover:bg-maingreen/20 flex items-center justify-center transition-colors cursor-pointer"
+            className="w-7 h-7 rounded-full bg-brand/10 hover:bg-brand/20 flex items-center justify-center transition-colors cursor-pointer"
           >
-            <HugeiconsIcon icon={Pen01Icon} size={13} className="text-maingreen" />
+            <HugeiconsIcon icon={Pen01Icon} size={13} className="text-brand" />
           </button>
           <button
             onClick={onRemover}
@@ -125,15 +125,15 @@ function CardFixo({
  
       <div className="flex items-center gap-4 flex-wrap">
         <div className="flex items-center gap-1.5 text-xs text-gray-600">
-          <HugeiconsIcon icon={UserCircleIcon} size={13} className="text-maingreen" />
+          <HugeiconsIcon icon={UserCircleIcon} size={13} className="text-brand" />
           <span>{booking.user?.fullname ?? '—'}</span>
         </div>
         <div className="flex items-center gap-1.5 text-xs text-gray-600">
-          <HugeiconsIcon icon={Call02Icon} size={13} className="text-maingreen" />
+          <HugeiconsIcon icon={Call02Icon} size={13} className="text-brand" />
           <span>{booking.user?.phone ?? '—'}</span>
         </div>
         <div className="flex items-center gap-1.5 text-xs text-gray-600">
-          <HugeiconsIcon icon={Money03Icon} size={13} className="text-maingreen" />
+          <HugeiconsIcon icon={Money03Icon} size={13} className="text-brand" />
           <span className="font-semibold">{formatarPreco(booking.price)}</span>
         </div>
         <div className="flex items-center gap-1.5 text-xs text-gray-500 ml-auto">
@@ -391,7 +391,7 @@ export function AgendamentosFixosPage() {
           onClick={() => navigate('/configuracoes')}
           className="w-9 h-9 rounded-full bg-lightblue flex items-center justify-center hover:bg-lightblue/70 transition-colors cursor-pointer"
         >
-          <HugeiconsIcon icon={ArrowLeft01Icon} size={18} className="text-maingreen" />
+          <HugeiconsIcon icon={ArrowLeft01Icon} size={18} className="text-brand" />
         </button>
         <div>
           <h1 className="font-montserrat font-bold text-xl text-gray-900">Agendamentos Fixos</h1>

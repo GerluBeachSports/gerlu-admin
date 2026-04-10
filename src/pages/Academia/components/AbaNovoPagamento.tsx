@@ -94,7 +94,7 @@ export function AbaNovoPagamento({ aluno, onSuccess }: Props) {
                     <Calendar
                         aria-label="Data de Pagamento"
                         onChange={(v: DateValue) => setDataPagamento(v as CalendarDate)}
-                        classNames={{ cellButton: "data-[selected=true]:bg-maingreen data-[selected=true]:text-white" }}
+                        classNames={{ cellButton: "data-[selected=true]:bg-brand data-[selected=true]:text-white" }}
                     />
                 </div>
 
@@ -103,7 +103,7 @@ export function AbaNovoPagamento({ aluno, onSuccess }: Props) {
                     <Calendar
                         aria-label="Data de Vencimento"
                         onChange={(v: DateValue) => setDataVencimento(v as CalendarDate)}
-                        classNames={{ cellButton: "data-[selected=true]:bg-maingreen data-[selected=true]:text-white" }}
+                        classNames={{ cellButton: "data-[selected=true]:bg-brand data-[selected=true]:text-white" }}
                     />
                 </div>
 
@@ -128,14 +128,14 @@ export function AbaNovoPagamento({ aluno, onSuccess }: Props) {
                 <div>
                     <p>Anexar Comprovante</p>
                     {comprovante ? (
-                        <div className="rounded-xl border w-full border-maingreen px-1.5 py-2 flex items-center justify-between gap-2">
+                        <div className="rounded-xl border w-full border-brand px-1.5 py-2 flex items-center justify-between gap-2">
                             <p className="text-sm truncate max-w-60 lg:max-w-50">{comprovante.name}</p>
                             <button onClick={() => setComprovante(null)} className="text-gray-400 hover:text-red-500 transition-colors cursor-pointer shrink-0">
                                 <HugeiconsIcon icon={Cancel01Icon} size={16} />
                             </button>
                         </div>
                     ) : (
-                        <label className="rounded-xl border w-full border-maingreen px-1.5 py-2 cursor-pointer hover:bg-secondarygreen/30 transition-all duration-200 flex items-center justify-center">
+                        <label className="rounded-xl border w-full border-brand px-1.5 py-2 cursor-pointer hover:bg-brandsecondary/30 transition-all duration-200 flex items-center justify-center">
                             <p className="text-sm">Anexar comprovante aqui</p>
                             <input type="file" accept=".png,.jpeg,.jpg,.pdf" className="hidden"
                                 onChange={(e) => { const f = e.target.files?.[0]; if (f) setComprovante(f) }}
@@ -150,7 +150,7 @@ export function AbaNovoPagamento({ aluno, onSuccess }: Props) {
             <div className="space-y-4">
                 <div>
                     <p>Informações do novo pagamento</p>
-                    <div className="bg-maingreen text-white text-sm rounded-2xl p-4 lg:min-w-90 mt-1 space-y-1">
+                    <div className="bg-brand text-white text-sm rounded-2xl p-4 lg:min-w-90 mt-1 space-y-1">
                         <p>Aluno: <span className="font-semibold">{aluno?.nome ?? '—'}</span></p>
                         <p>Data de Pagamento: <span className="font-semibold">{formatarData(dataPagamento)}</span></p>
                         <p>Data de Vencimento: <span className="font-semibold">{formatarData(dataVencimento)}</span></p>

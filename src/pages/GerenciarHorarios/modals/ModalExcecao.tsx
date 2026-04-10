@@ -153,7 +153,7 @@ export function ModalExcecao({ isOpen, onOpenChange, courtId, excecao, onSalvar 
                       focusedValue={data}
                       onFocusChange={(d) => { if (d) setData(d) }}
                       classNames={{
-                        cellButton: 'data-[selected=true]:bg-maingreen data-[selected=true]:text-white',
+                        cellButton: 'data-[selected=true]:bg-brand data-[selected=true]:text-white',
                       }}
                     />
                   </div>
@@ -181,7 +181,7 @@ export function ModalExcecao({ isOpen, onOpenChange, courtId, excecao, onSalvar 
                     onClick={() => setModo(op.value)}
                     className={`flex-1 py-2 rounded-xl text-sm font-medium transition-all cursor-pointer
                       ${modo === op.value
-                        ? op.value === 'fechado' ? 'bg-red-500 text-white' : 'bg-maingreen text-white'
+                        ? op.value === 'fechado' ? 'bg-red-500 text-white' : 'bg-brand text-white'
                         : 'bg-lightblue text-gray-600 hover:bg-lightblue/70'
                       }`}
                   >
@@ -242,7 +242,7 @@ export function ModalExcecao({ isOpen, onOpenChange, courtId, excecao, onSalvar 
                   ) : (
                     <button
                       onClick={() => { setSegundoIntervalo(true); setOpenTime2(closeTime) }}
-                      className="text-sm text-maingreen font-medium text-left px-1 cursor-pointer hover:underline"
+                      className="text-sm text-brand font-medium text-left px-1 cursor-pointer hover:underline"
                     >
                       + Adicionar 2º intervalo
                     </button>

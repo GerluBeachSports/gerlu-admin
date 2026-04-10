@@ -227,7 +227,7 @@ export function ModalNovoAgendamento({ isOpen, onOpenChange, onSuccess }: Props)
                         focusedValue={dataSelecionada ?? hoje}
                         onFocusChange={(d) => { if (d) setDataSelecionada(d) }}
                         classNames={{
-                          cellButton: `data-[selected=true]:bg-maingreen data-[selected=true]:text-white`,
+                          cellButton: `data-[selected=true]:bg-brand data-[selected=true]:text-white`,
                         }}
                       />
                     </div>
@@ -291,7 +291,7 @@ export function ModalNovoAgendamento({ isOpen, onOpenChange, onSuccess }: Props)
                                   {formatarDuracao(h.slotDurationMinutes)}
                                 </span>
                                 <span className="text-gray-200">·</span>
-                                <span className="text-xs font-semibold text-maingreen">
+                                <span className="text-xs font-semibold text-brand">
                                   {formatarPreco(h.price)}
                                 </span>
                               </div>

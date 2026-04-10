@@ -235,7 +235,7 @@ export function ModalDisponibilidade({ isOpen, onOpenChange, dataSelecionada }: 
                             ${modo === op.value
                               ? op.value === 'fechado'
                                 ? 'bg-red-500 text-white'
-                                : 'bg-maingreen text-white'
+                                : 'bg-brand text-white'
                               : 'bg-lightblue text-gray-600 hover:bg-lightblue/70'
                             }`}
                         >
@@ -278,7 +278,7 @@ export function ModalDisponibilidade({ isOpen, onOpenChange, dataSelecionada }: 
                       ) : (
                         <button
                           onClick={() => { setSegundoIntervalo(true); setOpenTime2(closeTime); }}
-                          className="text-sm text-maingreen font-medium text-left px-1 cursor-pointer hover:underline"
+                          className="text-sm text-brand font-medium text-left px-1 cursor-pointer hover:underline"
                         >
                           + Adicionar 2º intervalo
                         </button>

@@ -37,7 +37,7 @@ function TagExcecao({ excecao }: { excecao: Excecao }) {
     : ''
 
   return (
-    <span className="bg-maingreen/10 text-maingreen text-xs font-medium px-2 py-0.5 rounded-full">
+    <span className="bg-brand/10 text-brand text-xs font-medium px-2 py-0.5 rounded-full">
       {intervalo1}{intervalo2}
     </span>
   )
@@ -101,14 +101,14 @@ function SecaoQuadra({
                     {item ? (
                       <button
                         onClick={() => onEditarGrade(item)}
-                        className="w-7 h-7 rounded-full bg-maingreen flex items-center justify-center cursor-pointer hover:bg-maingreen/80 transition-colors shrink-0 ml-2"
+                        className="w-7 h-7 rounded-full bg-brand flex items-center justify-center cursor-pointer hover:bg-brand/80 transition-colors shrink-0 ml-2"
                       >
                         <HugeiconsIcon icon={Pen01Icon} size={12} className="text-white" />
                       </button>
                     ) : (
                       <button
                         onClick={() => onNovaGrade(quadra.id, idx)}
-                        className="w-7 h-7 rounded-full bg-gray-200 flex items-center justify-center cursor-pointer hover:bg-maingreen hover:text-white transition-colors shrink-0 ml-2 text-gray-400 font-bold text-base leading-none"
+                        className="w-7 h-7 rounded-full bg-gray-200 flex items-center justify-center cursor-pointer hover:bg-brand hover:text-white transition-colors shrink-0 ml-2 text-gray-400 font-bold text-base leading-none"
                       >
                         +
                       </button>
@@ -127,7 +127,7 @@ function SecaoQuadra({
             </p>
             <button
               onClick={() => onNovaExcecao(quadra.id)}
-              className="text-xs text-maingreen font-semibold cursor-pointer hover:underline"
+              className="text-xs text-brand font-semibold cursor-pointer hover:underline"
             >
               + Nova exceção
             </button>
@@ -153,7 +153,7 @@ function SecaoQuadra({
                   <div className="flex gap-1.5 shrink-0 ml-2">
                     <button
                       onClick={() => onEditarExcecao(exc)}
-                      className="w-7 h-7 rounded-full bg-maingreen flex items-center justify-center cursor-pointer hover:bg-maingreen/80 transition-colors"
+                      className="w-7 h-7 rounded-full bg-brand flex items-center justify-center cursor-pointer hover:bg-brand/80 transition-colors"
                     >
                       <HugeiconsIcon icon={Pen01Icon} size={12} className="text-white" />
                     </button>
@@ -252,7 +252,7 @@ export function GerenciarHorariosPage() {
       <div className="flex items-center gap-x-4 mb-8">
         <button
           onClick={() => navigate('/configuracoes')}
-          className="cursor-pointer text-gray-400 hover:text-maingreen transition-colors"
+          className="cursor-pointer text-gray-400 hover:text-brand transition-colors"
         >
           <HugeiconsIcon icon={CircleArrowLeft01Icon} size={24} />
         </button>

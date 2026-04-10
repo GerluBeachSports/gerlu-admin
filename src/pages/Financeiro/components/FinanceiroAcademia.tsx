@@ -207,24 +207,24 @@ export function FinanceiroAcademia() {
     <div className="max-w-6xl mx-auto px-6 py-4">
       <div className="flex flex-col items-center gap-3 mb-6">
         <div className="flex items-center gap-4">
-          <button onClick={prevMonth} className="cursor-pointer text-maingreen">
+          <button onClick={prevMonth} className="cursor-pointer text-brand">
             <HugeiconsIcon icon={CircleArrowLeft01Icon} size={22} />
           </button>
-          <h2 className="text-xl font-bold text-maingreen w-48 text-center">
+          <h2 className="text-xl font-bold text-brand w-48 text-center">
             {MONTHS[monthIdx]} / {year}
           </h2>
-          <button onClick={nextMonth} className="cursor-pointer text-maingreen">
+          <button onClick={nextMonth} className="cursor-pointer text-brand">
             <HugeiconsIcon icon={CircleArrowRight01Icon} size={22} />
           </button>
         </div>
         <SecaoMensal monthIdx={monthIdx} year={year} />
 
         <div className="flex items-center gap-4 text-sm">
-          <button onClick={() => setDisplayYear(y => y - 1)} className="cursor-pointer text-maingreen">
+          <button onClick={() => setDisplayYear(y => y - 1)} className="cursor-pointer text-brand">
             <HugeiconsIcon icon={CircleArrowLeft01Icon} size={22} />
           </button>
-          <span className="text-xl font-bold w-16 text-center text-maingreen">{displayYear}</span>
-          <button onClick={() => setDisplayYear(y => y + 1)} className="cursor-pointer text-maingreen">
+          <span className="text-xl font-bold w-16 text-center text-brand">{displayYear}</span>
+          <button onClick={() => setDisplayYear(y => y + 1)} className="cursor-pointer text-brand">
             <HugeiconsIcon icon={CircleArrowRight01Icon} size={22} />
           </button>
         </div>

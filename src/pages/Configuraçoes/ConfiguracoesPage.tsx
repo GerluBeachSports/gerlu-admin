@@ -63,14 +63,14 @@ function CardQuadra({
           <button
             onClick={onPrecificacao}
             title="Precificação"
-            className="w-8 h-8 rounded-full bg-white border border-maingreen flex items-center justify-center shadow cursor-pointer hover:bg-maingreen/5 transition-colors"
+            className="w-8 h-8 rounded-full bg-green-100 border border-green-800 flex items-center justify-center shadow cursor-pointer hover:bg-green-200 transition-colors"
           >
-            <HugeiconsIcon icon={Money03Icon} size={14} className="text-maingreen" />
+            <HugeiconsIcon icon={Money03Icon} size={14} className="text-green-800" />
           </button>
           <button
             onClick={onEditar}
             title="Editar"
-            className="w-8 h-8 rounded-full bg-maingreen flex items-center justify-center shadow cursor-pointer hover:bg-maingreen/80 transition-colors"
+            className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center shadow cursor-pointer hover:bg-blue-400 transition-colors"
           >
             <HugeiconsIcon icon={Pen01Icon} size={14} className="text-white" />
           </button>
@@ -92,7 +92,7 @@ function CardQuadra({
           <div className="flex flex-wrap gap-x-2 gap-y-1">
             {quadra.esportes.map(e => (
               <div key={e.id} className="flex items-center gap-1">
-                <HugeiconsIcon icon={getIconeEsporte(e.name)} size={14} className="text-maingreen" />
+                <HugeiconsIcon icon={getIconeEsporte(e.name)} size={14} className="text-brand" />
                 <span className="text-xs text-gray-600">{e.name}</span>
               </div>
             ))}
@@ -225,7 +225,7 @@ export function ConfiguracoesPage() {
             </button>
 
             {savedFeedback && (
-              <p className="text-center text-sm text-maingreen font-medium animate-pulse">
+              <p className="text-center text-sm text-brand font-medium animate-pulse">
                 ✓ Dados salvos com sucesso!
               </p>
             )}
@@ -233,14 +233,14 @@ export function ConfiguracoesPage() {
 
           <button
             onClick={() => navigate('/configuracoes/horarios')}
-            className="w-full border border-maingreen text-maingreen hover:bg-maingreen/5 font-semibold px-6 py-2.5 rounded-xl transition-colors cursor-pointer text-sm"
+            className="w-full border border-brand text-brand hover:bg-brand/5 font-semibold px-6 py-2.5 rounded-xl transition-colors cursor-pointer text-sm"
           >
             Gerenciar Horários
           </button>
 
           <button
             onClick={() => navigate('/configuracoes/agendamentos-fixos')}
-            className="w-full border border-maingreen text-maingreen hover:bg-maingreen/5 font-semibold px-6 py-2.5 rounded-xl transition-colors cursor-pointer text-sm"
+            className="w-full border border-brand text-brand hover:bg-brand/5 font-semibold px-6 py-2.5 rounded-xl transition-colors cursor-pointer text-sm"
           >
             Agendamentos Fixos
           </button>

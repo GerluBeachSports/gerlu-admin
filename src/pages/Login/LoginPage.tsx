@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import LogoMeta from "../../assets/logo-meta.png"
+import LogoGerlu from "../../assets/logo-gerlu.svg"
 import MenBG from "../../assets/men-bg.png"
 import { Input } from "@heroui/react"
 import { HugeiconsIcon } from "@hugeicons/react"
@@ -23,13 +23,13 @@ export function LoginPage() {
 
     return (
         <main>
-            <header className="w-full bg-maingreen flex items-center px-12 py-2">
-                <img src={LogoMeta} alt="Logo Meta Centro Esportivo" className="h-14" />
+            <header className="w-full bg-brand flex items-center px-12 py-2">
+                <img src={LogoGerlu} alt="Logo Gerlu Beach Sports" className="h-16" />
             </header>
 
             <div className="hidden md:block">
-                <div className="fixed top-40 left-40 blur-3xl bg-maingreen/35 h-60 w-60 rounded-full" />
-                <div className="fixed top-80 left-100 blur-3xl bg-maingreen/35 h-60 w-60 rounded-full" />
+                <div className="fixed top-40 left-40 blur-3xl bg-brand/35 h-60 w-60 rounded-full" />
+                <div className="fixed top-80 left-100 blur-3xl bg-brand/35 h-60 w-60 rounded-full" />
                 <div className="fixed top-60 left-60">
                     <p className="font-montserrat font-bold text-4xl">
                         Seu melhor <br />
@@ -94,7 +94,7 @@ export function LoginPage() {
                         </button>
 
                         <div className="flex items-center justify-center gap-x-4 mt-10">
-                            <button className="rounded-2xl py-1 px-5 shadow-lg text-maingreen text-sm font-semibold cursor-pointer">
+                            <button className="rounded-2xl py-1 px-5 shadow-lg text-brand text-sm font-semibold cursor-pointer">
                                 Contato
                             </button>
                         </div>

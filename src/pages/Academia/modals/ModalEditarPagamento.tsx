@@ -117,7 +117,7 @@ export function ModalEditarPagamento({ isOpen, onOpenChange, pagamento, onSalvar
                       aria-label="Data de Pagamento"
                       value={dataPagamento}
                       onChange={(v: DateValue) => setDataPagamento(v as CalendarDate)}
-                      classNames={{ cellButton: "data-[selected=true]:bg-maingreen data-[selected=true]:text-white" }}
+                      classNames={{ cellButton: "data-[selected=true]:bg-brand data-[selected=true]:text-white" }}
                     />
                   )}
                 </div>
@@ -129,7 +129,7 @@ export function ModalEditarPagamento({ isOpen, onOpenChange, pagamento, onSalvar
                       aria-label="Data de Vencimento"
                       value={dataVencimento}
                       onChange={(v: DateValue) => setDataVencimento(v as CalendarDate)}
-                      classNames={{ cellButton: "data-[selected=true]:bg-maingreen data-[selected=true]:text-white" }}
+                      classNames={{ cellButton: "data-[selected=true]:bg-brand data-[selected=true]:text-white" }}
                     />
                   )}
                 </div>
@@ -155,21 +155,21 @@ export function ModalEditarPagamento({ isOpen, onOpenChange, pagamento, onSalvar
                 <div>
                   <p className="text-sm mb-1">Comprovante</p>
                   {comprovante ? (
-                    <div className="rounded-xl border w-full border-maingreen px-1.5 py-2 flex items-center justify-between gap-2">
+                    <div className="rounded-xl border w-full border-brand px-1.5 py-2 flex items-center justify-between gap-2">
                       <p className="text-sm truncate max-w-60">{comprovante.name}</p>
                       <button onClick={() => setComprovante(null)} className="text-gray-400 hover:text-red-500 transition-colors cursor-pointer shrink-0">
                         <HugeiconsIcon icon={Cancel01Icon} size={16} />
                       </button>
                     </div>
                   ) : receiptUrl ? (
-                    <div className="rounded-xl border w-full border-maingreen px-1.5 py-2 flex items-center justify-between gap-2">
-                      <p className="text-sm text-maingreen truncate">Comprovante anexado</p>
+                    <div className="rounded-xl border w-full border-brand px-1.5 py-2 flex items-center justify-between gap-2">
+                      <p className="text-sm text-brand truncate">Comprovante anexado</p>
                       <button onClick={() => setReceiptUrl(null)} className="text-gray-400 hover:text-red-500 transition-colors cursor-pointer shrink-0">
                         <HugeiconsIcon icon={Cancel01Icon} size={16} />
                       </button>
                     </div>
                   ) : (
-                    <label className="rounded-xl border w-full border-maingreen px-1.5 py-2 cursor-pointer hover:bg-secondarygreen/30 transition-all duration-200 flex items-center justify-center">
+                    <label className="rounded-xl border w-full border-brand px-1.5 py-2 cursor-pointer hover:bg-brandsecondary/30 transition-all duration-200 flex items-center justify-center">
                       <p className="text-sm">Anexar comprovante</p>
                       <input
                         type="file"

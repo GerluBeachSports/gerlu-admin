@@ -243,7 +243,7 @@ export function ModalNovoEvento({ isOpen, onOpenChange, onSuccess }: Props) {
                     onClick={() => setIncludeSaunaPool((v) => !v)}
                     className={`flex items-center justify-between px-4 py-3 rounded-xl text-sm transition-all cursor-pointer
                       ${includeSaunaPool
-                        ? "bg-maingreen text-white"
+                        ? "bg-brand text-white"
                         : "bg-lightblue text-gray-700 hover:bg-lightblue/80"
                       }`}
                   >
@@ -254,9 +254,9 @@ export function ModalNovoEvento({ isOpen, onOpenChange, onSuccess }: Props) {
 
                 {/* Preço calculado */}
                 {tipoReserva && (
-                  <div className="flex items-center justify-between bg-maingreen/10 rounded-xl px-4 py-3">
-                    <span className="text-sm text-maingreen font-medium">Total</span>
-                    <span className="text-sm font-bold text-maingreen">{precoFormatado}</span>
+                  <div className="flex items-center justify-between bg-brand/10 rounded-xl px-4 py-3">
+                    <span className="text-sm text-brand font-medium">Total</span>
+                    <span className="text-sm font-bold text-brand">{precoFormatado}</span>
                   </div>
                 )}
 
@@ -277,7 +277,7 @@ export function ModalNovoEvento({ isOpen, onOpenChange, onSuccess }: Props) {
                         onFocusChange={(d: DateValue) => { if (d) setDataSelecionada(new CalendarDate(d.year, d.month, d.day)); }}
                         isDateUnavailable={(date) => !isDomingo(date)}
                         classNames={{
-                          cellButton: `data-[selected=true]:bg-maingreen data-[selected=true]:text-white`,
+                          cellButton: `data-[selected=true]:bg-brand data-[selected=true]:text-white`,
                         }}
                       />
                     </div>

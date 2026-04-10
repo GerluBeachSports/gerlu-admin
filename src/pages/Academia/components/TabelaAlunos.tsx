@@ -36,7 +36,7 @@ export function TabelaAlunos({ alunos, loading, onRefetch }: Props) {
   if (loading) {
     return (
       <div className="flex justify-center py-12">
-        <div className="w-10 h-10 rounded-full border-3 border-gray-200 border-t-maingreen animate-spin" />
+        <div className="w-10 h-10 rounded-full border-3 border-gray-200 border-t-brand animate-spin" />
       </div>
     )
   }
@@ -86,7 +86,7 @@ export function TabelaAlunos({ alunos, loading, onRefetch }: Props) {
       <div className="hidden md:block w-full overflow-x-auto rounded-2xl border">
         <table className="w-full border-collapse text-sm">
           <thead>
-            <tr className="bg-maingreen text-white">
+            <tr className="bg-brand text-white">
               <th className="px-4 py-3 text-center font-medium whitespace-nowrap">Nome Completo</th>
               <th className="px-4 py-3 text-center font-medium whitespace-nowrap">Telefone</th>
               <th className="px-4 py-3 text-center font-medium whitespace-nowrap">Último Pagamento</th>

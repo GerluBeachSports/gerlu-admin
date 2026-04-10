@@ -27,7 +27,7 @@ export function AbaHistoricoPagamentos({ aluno, pagamentos, loading, pagina, tot
 
     if (loading) return (
         <div className="flex justify-center py-8">
-            <div className="w-8 h-8 rounded-full border-3 border-gray-200 border-t-maingreen animate-spin" />
+            <div className="w-8 h-8 rounded-full border-3 border-gray-200 border-t-brand animate-spin" />
         </div>
     )
 
@@ -48,7 +48,7 @@ export function AbaHistoricoPagamentos({ aluno, pagamentos, loading, pagina, tot
                         window.open(url, '_blank')
                     }
                 }}
-                className="px-3 py-1 text-xs rounded-md border border-maingreen text-maingreen hover:bg-maingreen/10 transition-colors cursor-pointer"
+                className="px-3 py-1 text-xs rounded-md border border-brand text-brand hover:bg-brand/10 transition-colors cursor-pointer"
             >
                 Ver Comprovante
             </button>
@@ -64,7 +64,7 @@ export function AbaHistoricoPagamentos({ aluno, pagamentos, loading, pagina, tot
                 <div className="hidden md:block w-full overflow-x-auto rounded-2xl border">
                     <table className="w-full border-collapse text-sm">
                         <thead>
-                            <tr className="bg-maingreen text-white">
+                            <tr className="bg-brand text-white">
                                 <th className="px-4 py-3 text-center font-medium whitespace-nowrap">Nome Completo</th>
                                 <th className="px-4 py-3 text-center font-medium whitespace-nowrap">Data do Pagamento</th>
                                 <th className="px-4 py-3 text-center font-medium whitespace-nowrap">Comprovante</th>
@@ -91,7 +91,7 @@ export function AbaHistoricoPagamentos({ aluno, pagamentos, loading, pagina, tot
                                     <td className="px-4 py-3 text-center">
                                         <button
                                             onClick={() => abrirEditar(p)}
-                                            className="text-gray-400 hover:text-maingreen transition-colors cursor-pointer"
+                                            className="text-gray-400 hover:text-brand transition-colors cursor-pointer"
                                         >
                                             <HugeiconsIcon icon={PencilEdit01Icon} size={18} />
                                         </button>
@@ -113,7 +113,7 @@ export function AbaHistoricoPagamentos({ aluno, pagamentos, loading, pagina, tot
                                 </div>
                                 <div className="flex items-center gap-2">
                                     <span className="font-semibold">R$ {p.amount.toFixed(2).replace('.', ',')}</span>
-                                    <button onClick={() => abrirEditar(p)} className="text-gray-400 hover:text-maingreen transition-colors cursor-pointer">
+                                    <button onClick={() => abrirEditar(p)} className="text-gray-400 hover:text-brand transition-colors cursor-pointer">
                                         <HugeiconsIcon icon={PencilEdit01Icon} size={18} />
                                     </button>
                                 </div>
@@ -134,7 +134,7 @@ export function AbaHistoricoPagamentos({ aluno, pagamentos, loading, pagina, tot
                         <button
                             onClick={() => irParaPagina(pagina - 1)}
                             disabled={pagina === 1}
-                            className="px-3 py-1 text-sm rounded-lg border border-maingreen text-maingreen disabled:opacity-30 disabled:cursor-not-allowed hover:bg-maingreen/10 cursor-pointer"
+                            className="px-3 py-1 text-sm rounded-lg border border-brand text-brand disabled:opacity-30 disabled:cursor-not-allowed hover:bg-brand/10 cursor-pointer"
                         >
                             Anterior
                         </button>
@@ -144,8 +144,8 @@ export function AbaHistoricoPagamentos({ aluno, pagamentos, loading, pagina, tot
                                 onClick={() => irParaPagina(p)}
                                 className={`w-8 h-8 text-sm rounded-lg border transition-colors cursor-pointer
                                     ${p === pagina
-                                        ? 'bg-maingreen text-white border-maingreen'
-                                        : 'border-maingreen text-maingreen hover:bg-maingreen/10'
+                                        ? 'bg-brand text-white border-brand'
+                                        : 'border-brand text-brand hover:bg-brand/10'
                                     }`}
                             >
                                 {p}
@@ -154,7 +154,7 @@ export function AbaHistoricoPagamentos({ aluno, pagamentos, loading, pagina, tot
                         <button
                             onClick={() => irParaPagina(pagina + 1)}
                             disabled={pagina === totalPaginas}
-                            className="px-3 py-1 text-sm rounded-lg border border-maingreen text-maingreen disabled:opacity-30 disabled:cursor-not-allowed hover:bg-maingreen/10 cursor-pointer"
+                            className="px-3 py-1 text-sm rounded-lg border border-brand text-brand disabled:opacity-30 disabled:cursor-not-allowed hover:bg-brand/10 cursor-pointer"
                         >
                             Próxima
                         </button>

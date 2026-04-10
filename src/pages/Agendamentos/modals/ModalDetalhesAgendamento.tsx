@@ -122,12 +122,12 @@ export function ModalDetalhesAgendamento({ agendamento, isOpen, onOpenChange, on
                             {/* Data e hora */}
                             <div className="flex items-center gap-4">
                                 <div className="flex items-center gap-2">
-                                    <HugeiconsIcon icon={Calendar01Icon} size={20} className="text-maingreen shrink-0" />
+                                    <HugeiconsIcon icon={Calendar01Icon} size={20} className="text-brand shrink-0" />
                                     <span className="text-sm">{dataFormatada}</span>
                                 </div>
                                 <span className="text-gray-300">|</span>
                                 <div className="flex items-center gap-2">
-                                    <HugeiconsIcon icon={Time02Icon} size={20} className="text-maingreen shrink-0" />
+                                    <HugeiconsIcon icon={Time02Icon} size={20} className="text-brand shrink-0" />
                                     <span className="text-sm">{horaFormatada}</span>
                                 </div>
                             </div>
@@ -135,12 +135,12 @@ export function ModalDetalhesAgendamento({ agendamento, isOpen, onOpenChange, on
                             {/* Usuário e telefone */}
                             <div className="flex items-center gap-4">
                                 <div className="flex items-center gap-2">
-                                    <HugeiconsIcon icon={UserCircleIcon} size={20} className="text-maingreen shrink-0" />
+                                    <HugeiconsIcon icon={UserCircleIcon} size={20} className="text-brand shrink-0" />
                                     <span className="text-sm">{agendamento.usuario.fullname}</span>
                                 </div>
                                 <span className="text-gray-300">|</span>
                                 <div className="flex items-center gap-2">
-                                    <HugeiconsIcon icon={Call02Icon} size={20} className="text-maingreen shrink-0" />
+                                    <HugeiconsIcon icon={Call02Icon} size={20} className="text-brand shrink-0" />
                                     <span className="text-sm">{telefoneFormatado}</span>
                                 </div>
                             </div>
@@ -148,19 +148,19 @@ export function ModalDetalhesAgendamento({ agendamento, isOpen, onOpenChange, on
                             {/* Quadra e esporte */}
                             <div className="flex items-center gap-4">
                                 <div className="flex items-center gap-2">
-                                    <HugeiconsIcon icon={Location01Icon} size={20} className="text-maingreen shrink-0" />
+                                    <HugeiconsIcon icon={Location01Icon} size={20} className="text-brand shrink-0" />
                                     <span className="text-sm">{agendamento.quadra.name}</span>
                                 </div>
                                 <span className="text-gray-300">|</span>
                                 <div className="flex items-center gap-2">
-                                    <HugeiconsIcon icon={iconeEsporte} size={20} className="text-maingreen shrink-0" />
+                                    <HugeiconsIcon icon={iconeEsporte} size={20} className="text-brand shrink-0" />
                                     <span className="text-sm">{agendamento.esporte.name}</span>
                                 </div>
                             </div>
 
                             {/* Preço */}
                             <div className="flex items-center gap-2">
-                                <HugeiconsIcon icon={Money03Icon} size={20} className="text-maingreen shrink-0" />
+                                <HugeiconsIcon icon={Money03Icon} size={20} className="text-brand shrink-0" />
                                 <span className="text-sm font-semibold">{precoFormatado}</span>
                             </div>
 
@@ -180,7 +180,7 @@ export function ModalDetalhesAgendamento({ agendamento, isOpen, onOpenChange, on
                                 Cancelar horário
                             </Button>
                             <Button
-                                className="flex-1 rounded-xl bg-maingreen text-white font-semibold"
+                                className="flex-1 rounded-xl bg-brand text-white font-semibold"
                                 onPress={onClose}
                             >
                                 Ok

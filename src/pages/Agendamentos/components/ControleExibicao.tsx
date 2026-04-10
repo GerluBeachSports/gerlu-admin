@@ -34,7 +34,7 @@ export function ControleExibicao({ dataSelecionada, setDataSelecionada, visualiz
                         focusedValue={dataSelecionada}
                         onFocusChange={setDataSelecionada}
                         classNames={{
-                            cellButton: `data-[selected=true]:bg-maingreen data-[selected=true]:text-white`
+                            cellButton: `data-[selected=true]:bg-brand data-[selected=true]:text-white`
                         }}
                     />
                 </div>
@@ -66,8 +66,8 @@ export function ControleExibicao({ dataSelecionada, setDataSelecionada, visualiz
                             onClick={() => setVisualizacao("dia")}
                             className={`flex-1 rounded-2xl py-2 cursor-pointer transition-all
                             ${visualizacao === "dia"
-                                    ? "bg-maingreen text-white"
-                                    : "border border-maingreen text-maingreen bg-transparent hover:bg-maingreen/10"
+                                    ? "bg-brand text-white"
+                                    : "border border-brand text-brand bg-transparent hover:bg-brand/10"
                                 }`}>
                             Dia
                         </button>
@@ -76,8 +76,8 @@ export function ControleExibicao({ dataSelecionada, setDataSelecionada, visualiz
                             onClick={() => setVisualizacao("mes")}
                             className={`flex-1 rounded-2xl py-2 cursor-pointer transition-all
                             ${visualizacao === "mes"
-                                    ? "bg-maingreen text-white"
-                                    : "border border-maingreen text-maingreen bg-transparent hover:bg-maingreen/10"
+                                    ? "bg-brand text-white"
+                                    : "border border-brand text-brand bg-transparent hover:bg-brand/10"
                                 }`}>
                             Mês
                         </button>

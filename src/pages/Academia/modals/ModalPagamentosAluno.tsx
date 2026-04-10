@@ -50,7 +50,7 @@ export function ModalPagamentosAluno({ isOpen, onOpenChange, aluno, onSuccess }:
                             aria-label="Pagamentos"
                             classNames={{
                                 tabList: "mx-auto",
-                                cursor: "bg-maingreen",
+                                cursor: "bg-brand",
                                 tab: "data-[selected=true]:text-white",
                                 tabContent: "group-data-[selected=true]:text-white"
                             }}

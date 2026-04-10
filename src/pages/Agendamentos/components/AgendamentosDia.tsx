@@ -60,10 +60,10 @@ function CardAgendamento({ ag, onClick }: CardAgendamentoProps) {
 
     return (
         <button className="card-day" onClick={() => onClick(ag)}>
-            <div className="bg-maingreen rounded-t-2xl px-8 py-1.5 font-montserrat text-white">
+            <div className="bg-brand rounded-t-2xl px-8 py-1.5 font-montserrat text-white">
                 <p className="text-center">{hora}</p>
             </div>
-            <div className="flex flex-col border-x-1 border-b-1 rounded-b-2xl border-maingreen justify-center py-2 px-1 gap-y-1">
+            <div className="flex flex-col border-x-1 border-b-1 rounded-b-2xl border-brand justify-center py-2 px-1 gap-y-1">
                 <div className="flex gap-x-2 items-center">
                     <HugeiconsIcon icon={UserCircleIcon} size={24} />
                     <p className="text-sm">{ag.usuario.fullname}</p>
@@ -106,7 +106,7 @@ export function AgendamentosDia({ dataSelecionada, setDataSelecionada, agendamen
                     <button className="cursor-pointer" onClick={retroceder}>
                         <HugeiconsIcon icon={CircleArrowLeft01Icon} />
                     </button>
-                    <p className="font-montserrat font-bold text-maingreen text-center">
+                    <p className="font-montserrat font-bold text-brand text-center">
                         {diaSemana}, {dataFormatada}
                     </p>
                     <button className="cursor-pointer" onClick={avancar}>
@@ -115,7 +115,7 @@ export function AgendamentosDia({ dataSelecionada, setDataSelecionada, agendamen
                 </div>
 
                 <button
-                    className="flex mt-2 gap-x-2 items-center cursor-pointer text-secondarygreen"
+                    className="flex mt-2 gap-x-2 items-center cursor-pointer text-brandsecondary"
                     onClick={disponibilidadeModal.onOpen}
                 >
                     <HugeiconsIcon icon={CalendarLock01Icon} size={20} />

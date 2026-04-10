@@ -103,7 +103,7 @@ export function EventosMes({
           {DIAS_SEMANA_DESKTOP.map((dia) => (
             <div
               key={dia}
-              className={`font-medium ${dia === "Domingo" ? "text-maingreen" : ""}`}
+              className={`font-medium ${dia === "Domingo" ? "text-brand" : ""}`}
             >
               {dia}
             </div>
@@ -120,7 +120,7 @@ export function EventosMes({
                 key={index}
                 className={`border h-28 p-2 flex flex-col
                   ${item.mes !== "atual" ? "bg-gray-100" : ""}
-                  ${isDomingo && item.mes === "atual" ? "bg-maingreen/5" : ""}
+                  ${isDomingo && item.mes === "atual" ? "bg-brand/5" : ""}
                 `}
               >
                 <span
@@ -128,7 +128,7 @@ export function EventosMes({
                     item.mes !== "atual"
                       ? "text-gray-400"
                       : isDomingo
-                      ? "text-maingreen font-semibold"
+                      ? "text-brand font-semibold"
                       : "text-gray-800"
                   }`}
                 >
@@ -138,7 +138,7 @@ export function EventosMes({
                 {evento && (
                   <button
                     onClick={() => irParaDia(item.dia)}
-                    className="mt-auto bg-maingreen text-white text-xs rounded-lg px-2 py-1 cursor-pointer hover:bg-maingreen/80 transition-colors"
+                    className="mt-auto bg-brand text-white text-xs rounded-lg px-2 py-1 cursor-pointer hover:bg-brand/80 transition-colors"
                   >
                     {evento.quantidade} evento{evento.quantidade > 1 ? "s" : ""}
                   </button>
@@ -155,7 +155,7 @@ export function EventosMes({
           {DIAS_SEMANA_MOBILE.map((dia, i) => (
             <div
               key={i}
-              className={`font-medium py-1 ${i === 0 ? "text-maingreen" : "text-gray-500"}`}
+              className={`font-medium py-1 ${i === 0 ? "text-brand" : "text-gray-500"}`}
             >
               {dia}
             </div>
@@ -172,7 +172,7 @@ export function EventosMes({
                 key={index}
                 onClick={() => item.mes === "atual" && irParaDia(item.dia)}
                 className={`border aspect-square flex flex-col items-center justify-center gap-0.5 p-1
-                  ${item.mes !== "atual" ? "bg-gray-100" : isDomingo ? "bg-maingreen/5" : ""}
+                  ${item.mes !== "atual" ? "bg-gray-100" : isDomingo ? "bg-brand/5" : ""}
                   ${temEvento ? "cursor-pointer" : "cursor-default"}`}
               >
                 <span
@@ -180,14 +180,14 @@ export function EventosMes({
                     item.mes !== "atual"
                       ? "text-gray-300"
                       : isDomingo
-                      ? "text-maingreen font-semibold"
+                      ? "text-brand font-semibold"
                       : "text-gray-400"
                   }`}
                 >
                   {String(item.dia).padStart(2, "0")}
                 </span>
                 {temEvento && (
-                  <span className="w-1.5 h-1.5 rounded-full bg-maingreen mt-0.5" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-brand mt-0.5" />
                 )}
               </button>
             );
@@ -211,7 +211,7 @@ export function EventosMes({
                 <p className="text-sm font-semibold text-gray-700 capitalize mb-1">
                   {dataFormatada}
                 </p>
-                <p className="text-xs text-maingreen font-medium">
+                <p className="text-xs text-brand font-medium">
                   {ev.quantidade} evento{ev.quantidade > 1 ? "s" : ""}
                 </p>
               </button>

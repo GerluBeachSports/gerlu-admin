@@ -1,4 +1,4 @@
-import LogoMeta from "../../assets/logo-meta.png"
+import LogoGerlu from "../../assets/logo-gerlu.svg"
 import { BodyPartMuscleIcon, Calendar03Icon, SaveMoneyDollarIcon, Settings01Icon, Menu01Icon, Cancel01Icon, PartyIcon } from "@hugeicons/core-free-icons"
 import { HugeiconsIcon } from "@hugeicons/react"
 import { useNavigate } from "react-router-dom"
@@ -22,9 +22,9 @@ export function Navbar() {
     }
 
     return (
-        <header className="w-full bg-maingreen text-white">
+        <header className="w-full bg-brand text-white">
             <div className="flex flex-row items-center px-6 md:px-12 py-2 justify-between">
-                <img src={LogoMeta} alt="Logo Meta Centro Esportivo" className="h-14" />
+                <img src={LogoGerlu} alt="Logo Gerlu Beach Sports" className="h-16" />
 
                 {/* Desktop nav */}
                 <div className="hidden md:flex flex-row gap-8">

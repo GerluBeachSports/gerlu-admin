@@ -35,7 +35,7 @@ export function ComprovantePage() {
         <div className="min-h-screen bg-gray-100 flex flex-col items-center py-8 px-4">
             <div className="bg-white rounded-2xl shadow-lg p-4 w-full max-w-4xl">
                 <div className="flex items-center justify-center mb-4">
-                    <h1 className="font-montserrat font-semibold text-maingreen">Comprovante</h1>
+                    <h1 className="font-montserrat font-semibold text-brand">Comprovante</h1>
                     
                 </div>
 
@@ -45,7 +45,7 @@ export function ComprovantePage() {
 
                 {!blobUrl && !erro && (
                     <div className="flex justify-center py-12">
-                        <div className="w-8 h-8 rounded-full border-3 border-gray-200 border-t-maingreen animate-spin" />
+                        <div className="w-8 h-8 rounded-full border-3 border-gray-200 border-t-brand animate-spin" />
                     </div>
                 )}
 

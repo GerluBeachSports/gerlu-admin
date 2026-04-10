@@ -10,9 +10,10 @@
     --font-poppins: Poppins, "sans-serif";
     --font-montserrat: Montserrat, "sans-serif";
 
-    --color-maingreen: #204820;
-    --color-secondarygreen: #608D60;
+    --color-brand: #C12E36;
+    --color-brandsecondary: #E9464F;
     --color-gradientblack: #181918;
+
     --color-lightblue: #EAF0F7;
     --color-morning: #B0C400;
     --color-afternoon: #FF6F00;
@@ -34,18 +35,18 @@
   }
 
   .gradient-background{
-    @apply bg-linear-to-r from-gradientblack to-maingreen;
+    @apply bg-linear-to-r from-gradientblack to-brand;
   }
 
   .button-g{
-    @apply bg-maingreen rounded-2xl p-3 text-white font-montserrat 
+    @apply bg-brand rounded-2xl p-3 text-white font-montserrat 
     font-semibold cursor-pointer transition-all duration-300 
     hover:-translate-y-1 hover:shadow-lg;
   }
 
   .confirm-button{
-    @apply bg-maingreen text-white font-semibold rounded-xl
-    px-3 py-2 text-sm cursor-pointer hover:bg-green-800 transition-colors 
+    @apply bg-green-800 text-white font-semibold rounded-xl
+    px-3 py-2 text-sm cursor-pointer hover:bg-green-600 transition-colors 
     duration-200;
   }
 
