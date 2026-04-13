@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react'
 import Cropper from 'react-easy-crop'
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Slider } from '@heroui/react'
 import { getCroppedImage } from '../../../lib/cropImage'
-import { uploadComprovante } from '../../../hooks/useCloudinary'
+import { uploadImagem } from '../../../hooks/useCloudinary'
 
 interface Props {
   isOpen: boolean
@@ -11,14 +11,16 @@ interface Props {
   onUploadSuccess: (url: string) => void
   cropShape?: 'round' | 'rect'
   aspect?: number
+  folder?: string
+  fileName?: string
 }
 
-export function ModalCropImagem({ isOpen, onOpenChange, imageSrc, onUploadSuccess, cropShape = 'round', aspect = 1 }: Props) {
-  const [crop, setCrop]         = useState({ x: 0, y: 0 })
-  const [zoom, setZoom]         = useState(1)
+export function ModalCropImagem({ isOpen, onOpenChange, imageSrc, onUploadSuccess, cropShape = 'round', aspect = 1, folder, fileName }: Props) {
+  const [crop, setCrop] = useState({ x: 0, y: 0 })
+  const [zoom, setZoom] = useState(1)
   const [croppedArea, setCroppedArea] = useState<{ x: number; y: number; width: number; height: number } | null>(null)
   const [uploading, setUploading] = useState(false)
-  const [erro, setErro]         = useState<string | null>(null)
+  const [erro, setErro] = useState<string | null>(null)
 
   const onCropComplete = useCallback((_: any, croppedAreaPixels: any) => {
     setCroppedArea(croppedAreaPixels)
@@ -30,19 +32,18 @@ export function ModalCropImagem({ isOpen, onOpenChange, imageSrc, onUploadSucces
     setUploading(true)
 
     try {
-      const file = await getCroppedImage(imageSrc, croppedArea)
-      const url  = await uploadComprovante(file)
+      const file = await getCroppedImage(imageSrc, croppedArea, 512, fileName)
+      const url = await uploadImagem(file, folder)
 
       if (!url) {
         setErro('Erro ao fazer upload. Tente novamente.')
-        setUploading(false)
         return
       }
 
       onUploadSuccess(url)
       onClose()
-    } catch {
-      setErro('Erro ao processar imagem.')
+    } catch (err) {
+      setErro(err instanceof Error ? err.message : 'Erro ao processar imagem.')
     } finally {
       setUploading(false)
     }

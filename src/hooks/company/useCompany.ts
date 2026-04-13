@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useState } from 'react'
 import { supabase } from '../../lib/supabase'
 
+const COMPANY_ID = import.meta.env.VITE_COMPANY_ID
+
 export interface Company {
   id: string
   name: string
@@ -20,6 +22,7 @@ export function useCompany() {
     const { data } = await supabase
       .from('company')
       .select('id, name, address, google_maps_link, image_url')
+      .eq('id', COMPANY_ID)
       .single()
 
     setCompany(data ?? null)
@@ -36,7 +39,7 @@ export function useCompany() {
     const { error: err } = await supabase
       .from('company')
       .update(dados)
-      .eq('id', company.id)
+      .eq('id', COMPANY_ID)
 
     setSaving(false)
 

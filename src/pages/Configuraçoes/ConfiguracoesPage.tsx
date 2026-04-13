@@ -22,6 +22,7 @@ import { ModalQuadra } from './modals/ModalQuadra'
 import { ModalPrecificacao } from './modals/ModalPrecificacao'
 import { ModalConfirmarExclusao } from './modals/ModalConfirmarExclusao'
 import { ModalCropImagem } from './modals/ModalCropImagem'
+import { validarImagem } from '../../hooks/useCloudinary'
 
 const ICONE_ESPORTE: Record<string, any> = {
   'Funcional na areia': WorkoutStretchingIcon,
@@ -117,6 +118,8 @@ export function ConfiguracoesPage() {
   const [companyMaps, setCompanyMaps] = useState('')
   const [uploadingLogo, setUploadingLogo] = useState(false)
   const [cropSrc, setCropSrc] = useState<string | null>(null)
+  const [erroLogo, setErroLogo] = useState<string | null>(null)
+  const [cropFileName, setCropFileName] = useState('logo.jpg')
   const [savedFeedback, setSavedFeedback] = useState(false)
   const logoRef = useRef<HTMLInputElement>(null)
   const cropModal = useDisclosure()
@@ -154,6 +157,16 @@ export function ConfiguracoesPage() {
   async function handleUploadLogo(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]
     if (!file) return
+    setCropFileName(file.name)
+
+    const erro = validarImagem(file)
+    if (erro) {
+      setErroLogo(erro.mensagem)
+      e.target.value = ''
+      return
+    }
+
+    setErroLogo(null)
     setCropSrc(URL.createObjectURL(file))
     cropModal.onOpen()
     e.target.value = ''
@@ -208,6 +221,10 @@ export function ConfiguracoesPage() {
             <p className="text-xs text-gray-400 cursor-pointer" onClick={() => logoRef.current?.click()}>
               {uploadingLogo ? 'Enviando...' : 'Editar Imagem'}
             </p>
+
+            {erroLogo && (
+              <p className="text-xs text-red-500 text-center">{erroLogo}</p>
+            )}
           </div>
 
           {/* Campos company */}
@@ -312,6 +329,8 @@ export function ConfiguracoesPage() {
         onOpenChange={cropModal.onOpenChange}
         imageSrc={cropSrc}
         onUploadSuccess={handleCropSuccess}
+        folder='logos'
+        fileName={cropFileName}
       />
     </main>
   )

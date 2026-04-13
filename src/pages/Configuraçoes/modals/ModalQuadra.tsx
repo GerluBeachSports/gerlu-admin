@@ -6,6 +6,7 @@ import { HugeiconsIcon } from '@hugeicons/react'
 import { AlbumNotFound01Icon } from '@hugeicons/core-free-icons'
 import { useTodosEsportes, type QuadraCompleta } from '../../../hooks/configuracoes/useConfiguracoesQuadras'
 import { ModalCropImagem } from './ModalCropImagem'
+import { validarImagem } from '../../../hooks/useCloudinary'
 
 interface Props {
   isOpen: boolean
@@ -32,6 +33,7 @@ export function ModalQuadra({ isOpen, onOpenChange, quadra, onSalvar }: Props) {
   const [imageUrl, setImageUrl] = useState<string | null>(null)
   const [sportIds, setSportIds] = useState<string[]>([])
   const [uploading, _setUploading] = useState(false)
+  const [cropFileName, setCropFileName] = useState('quadra.jpg')
   const [saving, setSaving] = useState(false)
   const [erro, setErro] = useState<string | null>(null)
   const [cropSrc, setCropSrc] = useState<string | null>(null)
@@ -60,6 +62,15 @@ export function ModalQuadra({ isOpen, onOpenChange, quadra, onSalvar }: Props) {
   function handleUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]
     if (!file) return
+    setCropFileName(file.name)
+
+    const erro = validarImagem(file)
+    if (erro) {
+      setErro(erro.mensagem)
+      e.target.value = ''
+      return
+    }
+
     const objectUrl = URL.createObjectURL(file)
     setCropSrc(objectUrl)
     cropModal.onOpen()
@@ -184,6 +195,8 @@ export function ModalQuadra({ isOpen, onOpenChange, quadra, onSalvar }: Props) {
         onUploadSuccess={(url) => setImageUrl(url)}
         cropShape="rect"
         aspect={16 / 9}
+        folder='quadras'
+        fileName={cropFileName}
       />
     </>
   )
