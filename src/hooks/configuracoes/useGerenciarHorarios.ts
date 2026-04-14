@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useState } from 'react'
 import { supabase } from '../../lib/supabase'
 
+const COMPANY_ID = import.meta.env.VITE_COMPANY_ID
+
 export interface GradePadrao {
   id: string
   court_id?: string
@@ -40,6 +42,7 @@ export function useGerenciarHorarios() {
     const { data: courts } = await supabase
       .from('courts')
       .select('id, name')
+      .eq('company_id', COMPANY_ID)
       .order('name')
 
     if (!courts) { setLoading(false); return }

@@ -17,7 +17,7 @@ interface Props {
     name: string
     image_url: string | null
     sport_ids: string[]
-  }) => Promise<boolean>
+  }) => Promise<boolean | string>
 }
 
 const inputClass = {
@@ -82,7 +82,7 @@ export function ModalQuadra({ isOpen, onOpenChange, quadra, onSalvar }: Props) {
     if (!name.trim()) return setErro('Informe o nome da quadra.')
 
     setSaving(true)
-    const ok = await onSalvar({
+    const resultado = await onSalvar({
       id: quadra?.id,
       name: name.trim(),
       image_url: imageUrl,
@@ -90,8 +90,17 @@ export function ModalQuadra({ isOpen, onOpenChange, quadra, onSalvar }: Props) {
     })
     setSaving(false)
 
-    if (ok) onClose()
-    else setErro('Erro ao salvar quadra. Tente novamente.')
+    if (resultado === 'possui_agendamentos') {
+      setErro('Não é possível remover um esporte que possui agendamentos futuros.')
+      return
+    }
+
+    if (!resultado) {
+      setErro('Erro ao salvar quadra. Tente novamente.')
+      return
+    }
+
+    onClose()
   }
 
   return (

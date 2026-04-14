@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../../lib/supabase'
 
+const COMPANY_ID = import.meta.env.VITE_COMPANY_ID
+
 export interface Quadra {
   id: string
   name: string
@@ -15,6 +17,7 @@ export function useQuadras() {
     supabase
       .from('courts')
       .select('id, name, image_url')
+      .eq('company_id', COMPANY_ID)
       .order('name')
       .then(({ data }) => {
         setQuadras(data ?? [])

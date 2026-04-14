@@ -5,6 +5,12 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 }
 
+interface CourtSportWithCourt {
+  courts: {
+    company_id: string
+  }
+}
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders })
@@ -26,7 +32,6 @@ Deno.serve(async (req) => {
 
     const token = authHeader.replace("Bearer ", "")
     const { data: { user }, error: userError } = await supabaseAdmin.auth.getUser(token)
-    console.log("user:", user?.id, "userError:", userError)
 
     if (userError || !user) {
       return new Response(
@@ -35,9 +40,10 @@ Deno.serve(async (req) => {
       )
     }
 
+    // Verifica se é admin
     const { data: adminData } = await supabaseAdmin
       .from("admins")
-      .select("id")
+      .select("id, company_id, is_master")
       .eq("id", user.id)
       .single()
 
@@ -57,10 +63,35 @@ Deno.serve(async (req) => {
       )
     }
 
+    const { data: courtSport } = await supabaseAdmin
+      .from("court_sports")
+      .select("courts!inner(company_id)")
+      .eq("id", court_sport_id)
+      .single() as { data: CourtSportWithCourt | null, error: unknown }
+
+    const companyId = (courtSport as CourtSportWithCourt | null)?.courts?.company_id
+
+    if (!companyId) {
+      return new Response(
+        JSON.stringify({ error: "Quadra não encontrada." }),
+        { status: 404, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      )
+    }
+
+    // Garante que admin não-master só agenda na própria empresa
+    if (!adminData.is_master && adminData.company_id !== companyId) {
+      return new Response(
+        JSON.stringify({ error: "Acesso negado." }),
+        { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      )
+    }
+
+    // Busca usuário por telefone dentro da empresa
     const { data: usuarioExistente } = await supabaseAdmin
       .from("users")
       .select("id")
       .eq("phone", phone)
+      .eq("company_id", companyId)  // filtro por empresa
       .single()
 
     let userId: string
@@ -93,6 +124,7 @@ Deno.serve(async (req) => {
           id: authData.user.id,
           fullname,
           phone,
+          company_id: companyId,  // campo novo
         })
 
       if (userInsertError) {

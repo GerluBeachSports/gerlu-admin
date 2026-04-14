@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useState } from 'react'
 import { supabase } from '../../lib/supabase'
 
+const COMPANY_ID = import.meta.env.VITE_COMPANY_ID
+
 export interface Esporte {
   id: string
   name: string
@@ -39,6 +41,7 @@ export function useConfiguracoesQuadras() {
         id, name, image_url,
         court_sports ( id, sports ( id, name ) )
       `)
+      .eq('company_id', COMPANY_ID)  // filtro por empresa
       .order('name')
 
     if (err) {
@@ -68,7 +71,7 @@ export function useConfiguracoesQuadras() {
     name: string
     image_url: string | null
     sport_ids: string[]
-  }): Promise<boolean> {
+  }): Promise<boolean | string> {
     const isEdicao = !!dados.id
 
     if (isEdicao) {
@@ -79,27 +82,65 @@ export function useConfiguracoesQuadras() {
 
       if (updateErr) return false
 
-      await supabase.from('court_sports').delete().eq('court_id', dados.id!)
+      // Busca os court_sports atuais com seu sport_id
+      const { data: csAtuais } = await supabase
+        .from('court_sports')
+        .select('id, sport_id')
+        .eq('court_id', dados.id!)
 
-      if (dados.sport_ids.length > 0) {
-        const { error: csErr } = await supabase.from('court_sports').insert(
-          dados.sport_ids.map(sport_id => ({ court_id: dados.id!, sport_id }))
-        )
+      const csMap = new Map((csAtuais ?? []).map((cs: any) => [cs.sport_id, cs.id]))
+      const sportIdsAtuais = new Set(csMap.keys())
+      const sportIdsNovos = new Set(dados.sport_ids)
+
+      // Remove apenas os que foram desmarcados
+      const remover = [...sportIdsAtuais].filter(id => !sportIdsNovos.has(id))
+      if (remover.length > 0) {
+        const idsParaRemover = remover.map(sport_id => csMap.get(sport_id)!)
+
+        // Verifica se existe algum booking futuro vinculado
+        const { count } = await supabase
+          .from('bookings')
+          .select('id', { count: 'exact', head: true })
+          .in('court_sport_id', idsParaRemover)
+          .gte('booking_start', new Date().toISOString())
+
+        if (count && count > 0) {
+          return 'possui_agendamentos'  // altera o retorno de boolean para boolean | string
+        }
+
+        // Sem bookings futuros, pode remover com segurança
+        const { error: deleteErr } = await supabase
+          .from('court_sports')
+          .delete()
+          .in('id', idsParaRemover)
+
+        if (deleteErr) return false
+      }
+
+      // Insere apenas os que são novos
+      const inserir = [...sportIdsNovos].filter(id => !sportIdsAtuais.has(id))
+      if (inserir.length > 0) {
+        const { error: csErr } = await supabase
+          .from('court_sports')
+          .insert(inserir.map(sport_id => ({ court_id: dados.id!, sport_id })))
+
         if (csErr) return false
       }
+
     } else {
       const { data: nova, error: insertErr } = await supabase
         .from('courts')
-        .insert({ name: dados.name, image_url: dados.image_url })
+        .insert({ name: dados.name, image_url: dados.image_url, company_id: COMPANY_ID })
         .select('id')
         .single()
 
       if (insertErr || !nova) return false
 
       if (dados.sport_ids.length > 0) {
-        const { error: csErr } = await supabase.from('court_sports').insert(
-          dados.sport_ids.map(sport_id => ({ court_id: nova.id, sport_id }))
-        )
+        const { error: csErr } = await supabase
+          .from('court_sports')
+          .insert(dados.sport_ids.map(sport_id => ({ court_id: nova.id, sport_id })))
+
         if (csErr) return false
       }
     }
@@ -165,7 +206,7 @@ export function usePrecificacaoQuadra(courtId: string | null) {
       (data ?? []).map((r: any) => ({
         id: r.id,
         day_of_week: r.day_of_week,
-        start_time: r.start_time.slice(0, 5),   // "HH:mm"
+        start_time: r.start_time.slice(0, 5),
         end_time: r.end_time.slice(0, 5),
         price: Number(r.price),
         slot_duration_minutes: r.slot_duration_minutes,

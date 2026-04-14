@@ -2,6 +2,8 @@ import { useCallback, useEffect, useState } from "react";
 import { supabase } from "../../lib/supabase";
 import { CalendarDate, getLocalTimeZone } from "@internationalized/date";
 
+const COMPANY_ID = import.meta.env.VITE_COMPANY_ID
+
 export type Turno = "morning" | "afternoon" | "night";
 
 export interface Agendamento {
@@ -57,10 +59,11 @@ export function useAgendamentos(dataSelecionada: CalendarDate) {
           phone
         ),
         court_sports (
-          courts ( name, image_url ),
+          courts!inner ( name, image_url, company_id ),
           sports ( name )
         )
       `)
+      .eq("court_sports.courts.company_id", COMPANY_ID)  // filtro por empresa
       .gte("booking_start", inicioDia.toISOString())
       .lte("booking_start", fimDia.toISOString())
       .order("booking_start", { ascending: true });
@@ -117,7 +120,7 @@ export function useResumoDia(agendamentos: Agendamento[]): ResumoDia {
   return { quantidade, faturamento };
 }
 
-//---------------MÊS---------------
+// ---------------MÊS---------------
 
 export interface AgendamentoResumoMes {
   dia: number;
@@ -126,9 +129,7 @@ export interface AgendamentoResumoMes {
 }
 
 export function useAgendamentosMes(dataSelecionada: CalendarDate) {
-  const [resumo, setResumo] = useState<Record<number, AgendamentoResumoMes[]>>(
-    {},
-  );
+  const [resumo, setResumo] = useState<Record<number, AgendamentoResumoMes[]>>({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -145,7 +146,14 @@ export function useAgendamentosMes(dataSelecionada: CalendarDate) {
 
     const { data, error: supabaseError } = await supabase
       .from("bookings")
-      .select("id, booking_start")
+      .select(`
+        id,
+        booking_start,
+        court_sports (
+          courts!inner ( company_id )
+        )
+      `)
+      .eq("court_sports.courts.company_id", COMPANY_ID)  // filtro por empresa
       .gte("booking_start", inicioMes.toISOString())
       .lte("booking_start", fimMes.toISOString())
       .order("booking_start", { ascending: true });

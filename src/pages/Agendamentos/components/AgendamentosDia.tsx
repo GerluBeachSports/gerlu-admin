@@ -14,6 +14,7 @@ import {
     BadmintonShuttleIcon,
     Circle,
     DashedLineCircleIcon,
+    MapPinCheckIcon,
 } from "@hugeicons/core-free-icons"
 import { useDisclosure } from "@heroui/react"
 import { CalendarDate, getLocalTimeZone } from "@internationalized/date"
@@ -69,7 +70,7 @@ function CardAgendamento({ ag, onClick }: CardAgendamentoProps) {
                     <p className="text-sm">{ag.usuario.fullname}</p>
                 </div>
                 <div className="flex gap-x-2 items-center">
-                    <HugeiconsIcon icon={UserCircleIcon} size={24} />
+                    <HugeiconsIcon icon={MapPinCheckIcon} size={24} />
                     <p className="text-sm">{ag.quadra.name}</p>
                 </div>
                 <div className="flex gap-x-2 items-center">
