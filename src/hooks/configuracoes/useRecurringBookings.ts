@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback } from "react";
 import { supabase } from "../../lib/supabase";
 
+const COMPANY_ID = import.meta.env.VITE_COMPANY_ID
+
 export interface RecurringBooking {
   id: string;
   user_id: string;
@@ -47,10 +49,11 @@ export function useRecurringBookings() {
         *,
         user:users(fullname, phone),
         court_sport:court_sports(
-          court:courts(id, name, image_url),
+          court:courts!inner(id, name, image_url, company_id),
           sport:sports(name)
         )
       `)
+      .eq("court_sport.court.company_id", COMPANY_ID)  // filtro por empresa
       .order("day_of_week", { ascending: true })
       .order("start_time", { ascending: true });
 

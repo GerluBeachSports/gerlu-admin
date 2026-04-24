@@ -1,12 +1,14 @@
 import { CalendarDate, getLocalTimeZone } from "@internationalized/date"
 import { HugeiconsIcon } from "@hugeicons/react"
-import { CircleArrowLeft01Icon, CircleArrowRight01Icon } from "@hugeicons/core-free-icons"
+import { CircleArrowLeft01Icon, CircleArrowRight01Icon, RepeatIcon } from "@hugeicons/core-free-icons"
 import { useAgendamentosMes } from "../../../hooks/agendamentos/useAgendamentos"
+import { type RecurringNoDia } from "../../../hooks/agendamentos/useRecurringNoMes"
 
 interface Props {
     dataSelecionada: CalendarDate
     setDataSelecionada: (data: CalendarDate) => void
     setVisualizacao: (v: 'mes' | 'dia') => void
+    recurringPorDia: Record<string, RecurringNoDia[]>
 }
 
 interface DiaCalendario {
@@ -23,18 +25,18 @@ const MESES = [
 ]
 
 const COR_TURNO = {
-    morning:   'bg-morning',
+    morning: 'bg-morning',
     afternoon: 'bg-afternoon',
-    night:     'bg-night',
+    night: 'bg-night',
 }
 
 const LABEL_TURNO = {
-    morning:   'Manhã',
+    morning: 'Manhã',
     afternoon: 'Tarde',
-    night:     'Noite',
+    night: 'Noite',
 }
 
-export function AgendamentosMes({ dataSelecionada, setDataSelecionada, setVisualizacao }: Props) {
+export function AgendamentosMes({ dataSelecionada, setDataSelecionada, setVisualizacao, recurringPorDia }: Props) {
     const jsDate = dataSelecionada.toDate(getLocalTimeZone())
     const mes = jsDate.getMonth()
     const ano = jsDate.getFullYear()
@@ -58,7 +60,7 @@ export function AgendamentosMes({ dataSelecionada, setDataSelecionada, setVisual
     }
 
     function mesAnterior() { setDataSelecionada(dataSelecionada.subtract({ months: 1 })) }
-    function proximoMes()  { setDataSelecionada(dataSelecionada.add({ months: 1 })) }
+    function proximoMes() { setDataSelecionada(dataSelecionada.add({ months: 1 })) }
     function irParaDia(dia: number) {
         setDataSelecionada(new CalendarDate(ano, mes + 1, dia))
         setVisualizacao('dia')
@@ -89,6 +91,7 @@ export function AgendamentosMes({ dataSelecionada, setDataSelecionada, setVisual
                 <div className="grid grid-cols-7 grid-rows-6 border rounded-xl overflow-hidden">
                     {diasCalendario.map((item, index) => {
                         const agendamentos = item.mes === 'atual' ? (resumo[item.dia] ?? []) : []
+                        const temRecurring = item.mes === 'atual' && (recurringPorDia[`${ano}-${String(mes + 1).padStart(2, '0')}-${String(item.dia).padStart(2, '0')}`]?.length ?? 0) > 0
 
                         return (
                             <div
@@ -112,6 +115,17 @@ export function AgendamentosMes({ dataSelecionada, setDataSelecionada, setVisual
                                         ))}
                                     </div>
                                 )}
+
+                                {temRecurring && (
+                                    <div className="flex gap-1 flex-wrap justify-center mt-1">
+                                        <button
+                                            onClick={() => irParaDia(item.dia)}
+                                            className="w-6 h-6 rounded-full bg-brandsecondary text-white text-xs flex items-center justify-center cursor-pointer"
+                                        >
+                                            <HugeiconsIcon icon={RepeatIcon} size={12} />
+                                        </button>
+                                    </div>
+                                )}
                             </div>
                         )
                     })}
@@ -129,6 +143,7 @@ export function AgendamentosMes({ dataSelecionada, setDataSelecionada, setVisual
                 <div className="grid grid-cols-7 border rounded-xl overflow-hidden mb-6">
                     {diasCalendario.map((item, index) => {
                         const temEvento = item.mes === 'atual' && !!resumo[item.dia]
+                        const temRecurring = item.mes === 'atual' && (recurringPorDia[`${ano}-${String(mes + 1).padStart(2, '0')}-${String(item.dia).padStart(2, '0')}`]?.length ?? 0) > 0
 
                         return (
                             <button
@@ -138,14 +153,18 @@ export function AgendamentosMes({ dataSelecionada, setDataSelecionada, setVisual
                                     ${item.mes !== 'atual' ? 'bg-gray-100' : ''}
                                     ${temEvento ? 'cursor-pointer' : 'cursor-default'}`}
                             >
-                                <span className={`text-xs font-medium leading-none ${
-                                    item.mes !== 'atual' ? 'text-gray-300'
+                                <span className={`text-xs font-medium leading-none ${item.mes !== 'atual' ? 'text-gray-300'
                                     : temEvento ? 'text-gray-900'
-                                    : 'text-gray-400'
-                                }`}>
+                                        : 'text-gray-400'
+                                    }`}>
                                     {String(item.dia).padStart(2, '0')}
                                 </span>
-                                {temEvento && <span className="w-1 h-1 rounded-full bg-morning mt-0.5" />}
+                                <div className="flex gap-x-0.5">
+
+                                {temEvento && <span className="w-1 h-1 rounded-full bg-morning" />}
+                                {temRecurring && <span className="w-1 h-1 rounded-full bg-brandsecondary" />}
+                                </div>
+                                
                             </button>
                         )
                     })}
