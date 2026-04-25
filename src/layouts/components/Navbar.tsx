@@ -1,5 +1,5 @@
 import LogoGerlu from "../../assets/logo-gerlu.svg"
-import { Calendar03Icon, SaveMoneyDollarIcon, Settings01Icon, Menu01Icon, Cancel01Icon } from "@hugeicons/core-free-icons"
+import { Calendar03Icon, SaveMoneyDollarIcon, Settings01Icon, Menu01Icon, Cancel01Icon, ComputerDollarIcon } from "@hugeicons/core-free-icons"
 import { HugeiconsIcon } from "@hugeicons/react"
 import { useNavigate } from "react-router-dom"
 import { useState } from "react"
@@ -10,6 +10,7 @@ export function Navbar() {
 
     const navItems = [
         { label: "Agendamentos", icon: Calendar03Icon, path: "/agendamentos" },
+        { label: "Comandas", icon: ComputerDollarIcon, path: "/comandas" },
         { label: "Financeiro", icon: SaveMoneyDollarIcon, path: "/financeiro" },
         { label: "Configurações", icon: Settings01Icon, path: "/configuracoes" },
     ]
