@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase'
+const COMPANY_ID = import.meta.env.VITE_COMPANY_ID
 
 export interface ComandasKpis {
   faturamentoTotal: number
@@ -27,9 +28,9 @@ export function useFinanceiroComandasMes(mes: number, ano: number) {
 
     async function buscar() {
       const [kpisRes, semanasRes] = await Promise.all([
-        supabase.rpc('get_comandas_kpis', { p_mes: mesFormatado }),
-        supabase.rpc('get_comandas_semanas', { p_mes: mesFormatado }),
-      ])
+  supabase.rpc('get_comandas_kpis', { p_mes: mesFormatado, p_company_id: COMPANY_ID }),
+  supabase.rpc('get_comandas_semanas', { p_mes: mesFormatado, p_company_id: COMPANY_ID }),
+])
 
       if (kpisRes.error || semanasRes.error) {
         setError('Erro ao carregar dados de comandas.')

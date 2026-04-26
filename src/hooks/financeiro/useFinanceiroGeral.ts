@@ -21,13 +21,12 @@ export interface GeralMesSegmentadoData {
   quadras: number;
 }
 
-// ── Hook mensal — re-executa apenas quando mês/ano mudam ─────────────────────
 export function useFinanceiroGeralMes(mes: number, ano: number) {
-  const [kpis, setKpis]         = useState<GeralKpis | null>(null);
+  const [kpis, setKpis] = useState<GeralKpis | null>(null);
   const [porSemana, setPorSemana] = useState<GeralSemanaData[]>([]);
-  const [loading, setLoading]   = useState(true);
-  const [error, setError]       = useState<string | null>(null);
-
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const COMPANY_ID = import.meta.env.VITE_COMPANY_ID
   const mesFormatado = `${ano}-${String(mes + 1).padStart(2, "0")}-01`;
 
   useEffect(() => {
@@ -36,8 +35,8 @@ export function useFinanceiroGeralMes(mes: number, ano: number) {
 
     async function buscar() {
       const [kpisRes, semanasRes] = await Promise.all([
-        supabase.rpc("get_geral_kpis",    { p_mes: mesFormatado }),
-        supabase.rpc("get_geral_semanas", { p_mes: mesFormatado }),
+        supabase.rpc('get_geral_kpis', { p_mes: mesFormatado, p_company_id: COMPANY_ID }),      // 👈 corrigido
+        supabase.rpc('get_geral_semanas', { p_mes: mesFormatado, p_company_id: COMPANY_ID }),   // 👈 corrigido
       ]);
 
       if (kpisRes.error || semanasRes.error) {
@@ -57,19 +56,19 @@ export function useFinanceiroGeralMes(mes: number, ano: number) {
   return { kpis, porSemana, loading, error };
 }
 
-// ── Hook anual — re-executa apenas quando o ano anual muda ───────────────────
 export function useFinanceiroGeralAnual(yearAnual: number) {
-  const [anual, setAnual]                     = useState<GeralMesData[]>([]);
+  const [anual, setAnual] = useState<GeralMesData[]>([]);
   const [anualSegmentado, setAnualSegmentado] = useState<GeralMesSegmentadoData[]>([]);
+  const COMPANY_ID = import.meta.env.VITE_COMPANY_ID
 
   useEffect(() => {
     async function buscar() {
       const [anualRes, segmentadoRes] = await Promise.all([
-        supabase.rpc("get_geral_anual",            { p_ano: yearAnual }),
-        supabase.rpc("get_geral_anual_segmentado", { p_ano: yearAnual }),
+        supabase.rpc("get_geral_anual", { p_ano: yearAnual, p_company_id: COMPANY_ID }),            // 👈
+        supabase.rpc("get_geral_anual_segmentado", { p_ano: yearAnual, p_company_id: COMPANY_ID }), // 👈
       ]);
 
-      if (!anualRes.error)      setAnual(anualRes.data ?? []);
+      if (!anualRes.error) setAnual(anualRes.data ?? []);
       if (!segmentadoRes.error) setAnualSegmentado(segmentadoRes.data ?? []);
     }
 

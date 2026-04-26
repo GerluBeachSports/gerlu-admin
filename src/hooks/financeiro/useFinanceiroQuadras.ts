@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../../lib/supabase";
+const COMPANY_ID = import.meta.env.VITE_COMPANY_ID
 
 // ── Tipos ─────────────────────────────────────────────────────────────────────
 export interface QuadrasKpis {
@@ -45,10 +46,10 @@ export function useFinanceiroQuadrasMes(mes: number, ano: number) {
 
     async function buscar() {
       const [kpisRes, esportesRes, semanasRes] = await Promise.all([
-        supabase.rpc("get_quadras_kpis",     { p_mes: mesFormatado }),
-        supabase.rpc("get_quadras_esportes", { p_mes: mesFormatado }),
-        supabase.rpc("get_quadras_semanas",  { p_mes: mesFormatado }),
-      ]);
+  supabase.rpc("get_quadras_kpis",     { p_mes: mesFormatado, p_company_id: COMPANY_ID }),
+  supabase.rpc("get_quadras_esportes", { p_mes: mesFormatado, p_company_id: COMPANY_ID }),
+  supabase.rpc("get_quadras_semanas",  { p_mes: mesFormatado, p_company_id: COMPANY_ID }),
+]);
 
       if (kpisRes.error || esportesRes.error || semanasRes.error) {
         setError("Erro ao carregar dados do mês.");
