@@ -7,7 +7,7 @@ type Filtro = "geral" | "comanda" | "quadras";
 
 const opcoes: { value: Filtro; label: string }[] = [
   { value: "geral",    label: "Geral" },
-  { value: "comanda", label: "comanda" },
+  { value: "comanda", label: "Comandas" },
   { value: "quadras",  label: "Quadras" },
 ];
 

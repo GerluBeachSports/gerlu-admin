@@ -58,12 +58,12 @@ export function useAgendamentos(dataSelecionada: CalendarDate) {
           fullname,
           phone
         ),
-        court_sports (
+        court_sports!inner (
           courts!inner ( name, image_url, company_id ),
           sports ( name )
         )
       `)
-      .eq("court_sports.courts.company_id", COMPANY_ID)  // filtro por empresa
+      .eq("court_sports.courts.company_id", COMPANY_ID)
       .gte("booking_start", inicioDia.toISOString())
       .lte("booking_start", fimDia.toISOString())
       .order("booking_start", { ascending: true });
@@ -149,11 +149,11 @@ export function useAgendamentosMes(dataSelecionada: CalendarDate) {
       .select(`
         id,
         booking_start,
-        court_sports (
+        court_sports!inner (
           courts!inner ( company_id )
         )
       `)
-      .eq("court_sports.courts.company_id", COMPANY_ID)  // filtro por empresa
+      .eq("court_sports.courts.company_id", COMPANY_ID)
       .gte("booking_start", inicioMes.toISOString())
       .lte("booking_start", fimMes.toISOString())
       .order("booking_start", { ascending: true });
