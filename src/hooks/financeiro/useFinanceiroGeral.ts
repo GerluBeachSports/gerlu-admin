@@ -5,9 +5,8 @@ import { supabase } from "../../lib/supabase";
 export interface GeralKpis {
   faturamentoTotal: number;
   faturamentoQuadras: number;
-  faturamentoAcademia: number;
+  faturamentoComandas: number;
   agendamentos: number;
-  alunosAtivos: number;
 }
 export interface GeralSemanaData {
   semana: number;
@@ -20,7 +19,6 @@ export interface GeralMesData {
 export interface GeralMesSegmentadoData {
   mes: string;
   quadras: number;
-  academia: number;
 }
 
 // ── Hook mensal — re-executa apenas quando mês/ano mudam ─────────────────────

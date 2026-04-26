@@ -1,13 +1,13 @@
 import { useState, useRef, useEffect } from "react";
 import { FinanceiroQuadras } from "./components/FinanceiroQuadras";
-import { FinanceiroAcademia } from "./components/FinanceiroAcademia";
 import { FinanceiroGeral } from "./components/FinanceiroGeral";
+import { FinanceiroComanda } from "./components/FinanceiroComanda";
 
-type Filtro = "geral" | "academia" | "quadras";
+type Filtro = "geral" | "comanda" | "quadras";
 
 const opcoes: { value: Filtro; label: string }[] = [
   { value: "geral",    label: "Geral" },
-  { value: "academia", label: "Academia" },
+  { value: "comanda", label: "comanda" },
   { value: "quadras",  label: "Quadras" },
 ];
 
@@ -35,7 +35,7 @@ export function FinanceiroPage() {
         <div className="relative" ref={dropdownRef}>
           <button
             onClick={() => setOpen(prev => !prev)}
-            className="flex items-center gap-2 bg-green-800 hover:bg-green-700 text-white text-sm font-semibold px-4 py-2.5 rounded-xl shadow-sm transition-colors"
+            className="flex items-center gap-2 border border-red-500 text-red-500 hover:bg-red-50 text-sm font-semibold px-4 py-2.5 rounded-xl shadow-sm transition-colors"
           >
             <span>{selecionado.label}</span>
             <svg
@@ -72,7 +72,7 @@ export function FinanceiroPage() {
 
       {/* ── CONTEÚDO ── */}
       {filtro === "geral"    && <FinanceiroGeral />}
-      {filtro === "academia" && <FinanceiroAcademia />}
+      {filtro === "comanda" && <FinanceiroComanda />}
       {filtro === "quadras"  && <FinanceiroQuadras />}
     </main>
   );

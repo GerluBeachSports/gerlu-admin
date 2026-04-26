@@ -1,17 +1,9 @@
 import { memo, useState } from "react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from "recharts";
-import { useFinanceiroGeralMes } from "../../../hooks/financeiro/useFinanceiroGeral";
-import { useFinanceiroGeralAnual } from "../../../hooks/financeiro/useFinanceiroGeral";
+import { useFinanceiroGeralMes, useFinanceiroGeralAnual } from "../../../hooks/financeiro/useFinanceiroGeral";
 import type { GeralSemanaData, GeralMesData } from "../../../hooks/financeiro/useFinanceiroGeral";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { CircleArrowLeft01Icon, CircleArrowRight01Icon } from "@hugeicons/core-free-icons";
-
-// ── Tipos ─────────────────────────────────────────────────────────────────────
-export interface FinanceiroGeralProps {
-  monthIdx: number;
-  year: number;
-  displayYear: number;
-}
 
 interface CustomTooltipProps {
   active?: boolean;
@@ -21,12 +13,10 @@ interface CustomTooltipProps {
   suffix?: string;
 }
 
-// ── Constantes ────────────────────────────────────────────────────────────────
 const BRL = (v: number) => new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(v);
 const semanaLabels: Record<number, string> = { 1: "1-7", 2: "8-14", 3: "15-21", 4: "22-28", 5: "29-31" };
 const MONTHS = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
 
-// ── Componentes auxiliares ────────────────────────────────────────────────────
 function CustomTooltip({ active, payload, label, prefix = "", suffix = "" }: CustomTooltipProps) {
   if (!active || !payload?.length) return null;
   return (
@@ -41,10 +31,11 @@ function CustomTooltip({ active, payload, label, prefix = "", suffix = "" }: Cus
   );
 }
 
-function DonutSegmentos({ quadras, academia }: { quadras: number; academia: number }) {
+// Donut agora com Quadras + Comandas
+function DonutSegmentos({ quadras, comandas }: { quadras: number; comandas: number }) {
   const data = [
     { name: `Quadras (${BRL(quadras)})`, value: quadras, color: "#1e3a5f" },
-    { name: `Academia (${BRL(academia)})`, value: academia, color: "#4ade80" },
+    { name: `Comandas (${BRL(comandas)})`, value: comandas, color: "#f59e0b" },
   ];
   const total = data.reduce((s, d) => s + d.value, 0);
   const r = 44, cx = 56, cy = 56, stroke = 14;
@@ -81,7 +72,6 @@ function DonutSegmentos({ quadras, academia }: { quadras: number; academia: numb
   );
 }
 
-// ── Seção Mensal — só re-renderiza quando monthIdx/year mudam ────────────────
 function SecaoMensal({ monthIdx, year }: { monthIdx: number; year: number }) {
   const { kpis, porSemana, loading, error } = useFinanceiroGeralMes(monthIdx, year);
 
@@ -93,20 +83,14 @@ function SecaoMensal({ monthIdx, year }: { monthIdx: number; year: number }) {
       {/* Coluna 1 — KPI cards */}
       <div className="flex flex-col gap-4">
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-          <p className="text-xs font-medium text-gray-400 text-center mb-3">Faturamento</p>
+          <p className="text-xs font-medium text-gray-400 text-center mb-3">Faturamento Total</p>
           <p className="text-3xl font-extrabold text-gray-900 text-center mb-2">
             {BRL(kpis?.faturamentoTotal ?? 0)}
           </p>
         </div>
-        <div className="grid grid-cols-2 gap-4">
-          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 text-center">
-            <p className="text-xs font-medium text-gray-400 mb-2">Alunos Ativos</p>
-            <p className="text-3xl font-extrabold text-gray-900">{kpis?.alunosAtivos ?? 0}</p>
-          </div>
-          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 text-center">
-            <p className="text-xs font-medium text-gray-400 mb-2">Agendamentos</p>
-            <p className="text-3xl font-extrabold text-gray-900">{kpis?.agendamentos ?? 0}</p>
-          </div>
+        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 text-center">
+          <p className="text-xs font-medium text-gray-400 mb-2">Agendamentos</p>
+          <p className="text-3xl font-extrabold text-gray-900">{kpis?.agendamentos ?? 0}</p>
         </div>
       </div>
 
@@ -140,21 +124,19 @@ function SecaoMensal({ monthIdx, year }: { monthIdx: number; year: number }) {
         </div>
       </div>
 
-      {/* Coluna 3 — Donut segmentos */}
+      {/* Coluna 3 — Donut Quadras vs Comandas */}
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 flex flex-col items-center justify-center">
         <p className="text-xs font-medium text-gray-400 text-center mb-1">Faturamento</p>
         <p className="text-[10px] text-gray-400 text-center mb-4">Segmentos</p>
         <DonutSegmentos
           quadras={kpis?.faturamentoQuadras ?? 0}
-          academia={kpis?.faturamentoAcademia ?? 0}
+          comandas={kpis?.faturamentoComandas ?? 0}
         />
       </div>
     </div>
   );
 }
 
-// ── Seção Anual — só re-renderiza quando displayYear muda ────────────────────
-// memo garante: se displayYear não mudou, este componente não executa nada.
 const SecaoAnual = memo(function SecaoAnual({ displayYear }: { displayYear: number }) {
   const { anual, anualSegmentado } = useFinanceiroGeralAnual(displayYear);
 
@@ -187,7 +169,7 @@ const SecaoAnual = memo(function SecaoAnual({ displayYear }: { displayYear: numb
               tickFormatter={(v: number) => `R$${(v / 1000).toFixed(0)}k`} />
             <Tooltip content={<CustomTooltip prefix="R$ " />} />
             <Bar dataKey="quadras" name="Quadras" stackId="a" fill="#1e3a5f" radius={[0, 0, 0, 0]} />
-            <Bar dataKey="academia" name="Academia" stackId="a" fill="#4ade80" radius={[4, 4, 0, 0]} />
+            <Bar dataKey="comandas" name="Comandas" stackId="a" fill="#f59e0b" radius={[4, 4, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
         <div className="flex justify-center gap-5 mt-3">
@@ -195,7 +177,7 @@ const SecaoAnual = memo(function SecaoAnual({ displayYear }: { displayYear: numb
             <div className="w-3 h-3 rounded-sm bg-[#1e3a5f]" /> Quadras
           </div>
           <div className="flex items-center gap-1.5 text-xs text-gray-500">
-            <div className="w-3 h-3 rounded-sm bg-[#4ade80]" /> Academia
+            <div className="w-3 h-3 rounded-sm bg-[#f59e0b]" /> Comandas
           </div>
         </div>
       </div>
@@ -203,7 +185,6 @@ const SecaoAnual = memo(function SecaoAnual({ displayYear }: { displayYear: numb
   );
 });
 
-// ── Main ──────────────────────────────────────────────────────────────────────
 export function FinanceiroGeral() {
   const now = new Date();
   const [monthIdx, setMonthIdx] = useState(now.getMonth());
