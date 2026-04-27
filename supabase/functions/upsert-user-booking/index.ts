@@ -91,12 +91,13 @@ Deno.serve(async (req) => {
       .from("users")
       .select("id")
       .eq("phone", phone)
-      .eq("company_id", companyId)  // filtro por empresa
+      .eq("company_id", companyId)
       .single()
 
     let userId: string
 
     if (usuarioExistente) {
+      // Usuário já existe na tabela pública — só atualiza o nome
       await supabaseAdmin
         .from("users")
         .update({ fullname })
@@ -104,37 +105,79 @@ Deno.serve(async (req) => {
 
       userId = usuarioExistente.id
     } else {
+      // Monta as credenciais no mesmo padrão do BookingCalendar.tsx (site do cliente)
+      const digits = phone.replace(/\D/g, "")
+      const fakeEmail = `${digits}_${companyId}@quadra.app`
+      const fakePassword = `quadra_${digits}`
+
+      let newUserId: string
+
+      // Tenta criar a conta Auth — pode já existir se o cliente agendou antes pelo site
       const { data: authData, error: authError } = await supabaseAdmin.auth.admin.createUser({
-        phone,
-        phone_confirm: true,
-        password: phone,
+        email: fakeEmail,
+        password: fakePassword,
+        email_confirm: true,
         user_metadata: { fullname },
       })
 
-      if (authError || !authData.user) {
-        return new Response(
-          JSON.stringify({ error: "Erro ao criar usuário: " + authError?.message }),
-          { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-        )
+      if (authError) {
+        // Usuário já existe no Auth (criado pelo site do cliente) — busca pelo email
+        const { data: listData, error: listError } = await supabaseAdmin.auth.admin.listUsers()
+
+        if (listError) {
+          return new Response(
+            JSON.stringify({ error: "Erro ao buscar usuário existente: " + listError.message }),
+            { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+          )
+        }
+
+        const existingAuthUser = listData.users.find((u) => u.email === fakeEmail)
+
+        if (!existingAuthUser) {
+          return new Response(
+            JSON.stringify({ error: "Erro ao criar usuário no Auth: " + authError.message }),
+            { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+          )
+        }
+
+        newUserId = existingAuthUser.id
+      } else {
+        if (!authData.user) {
+          return new Response(
+            JSON.stringify({ error: "Erro inesperado ao criar usuário." }),
+            { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+          )
+        }
+        newUserId = authData.user.id
       }
 
-      const { error: userInsertError } = await supabaseAdmin
+      // Insere na tabela pública (só se ainda não existir, evita 409)
+      const { data: existingPublic } = await supabaseAdmin
         .from("users")
-        .insert({
-          id: authData.user.id,
-          fullname,
-          phone,
-          company_id: companyId,  // campo novo
-        })
+        .select("id")
+        .eq("id", newUserId)
+        .eq("company_id", companyId)
+        .maybeSingle()
 
-      if (userInsertError) {
-        return new Response(
-          JSON.stringify({ error: "Erro ao salvar usuário: " + userInsertError.message }),
-          { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-        )
+      if (!existingPublic) {
+        const { error: userInsertError } = await supabaseAdmin
+          .from("users")
+          .insert({
+            id: newUserId,
+            fullname,
+            phone,
+            company_id: companyId,
+          })
+
+        if (userInsertError) {
+          return new Response(
+            JSON.stringify({ error: "Erro ao salvar usuário: " + userInsertError.message }),
+            { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+          )
+        }
       }
 
-      userId = authData.user.id
+      userId = newUserId
     }
 
     const { data: booking, error: bookingError } = await supabaseAdmin
