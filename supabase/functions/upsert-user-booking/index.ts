@@ -40,7 +40,6 @@ Deno.serve(async (req) => {
       )
     }
 
-    // Verifica se é admin
     const { data: adminData } = await supabaseAdmin
       .from("admins")
       .select("id, company_id, is_master")
@@ -54,15 +53,26 @@ Deno.serve(async (req) => {
       )
     }
 
-    const { phone, fullname, court_sport_id, booking_start, booking_end, price } = await req.json()
+    const {
+      phone,
+      fullname,
+      court_sport_id,
+      day_of_week,
+      start_time,
+      end_time,
+      price,
+      valid_from,
+      valid_until,
+    } = await req.json()
 
-    if (!phone || !fullname || !court_sport_id || !booking_start || !booking_end || !price) {
+    if (!phone || !fullname || !court_sport_id || day_of_week == null || !start_time || !end_time || !price || !valid_from) {
       return new Response(
         JSON.stringify({ error: "Campos obrigatórios faltando." }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       )
     }
 
+    // Resolve o company_id a partir da quadra
     const { data: courtSport } = await supabaseAdmin
       .from("court_sports")
       .select("courts!inner(company_id)")
@@ -97,7 +107,6 @@ Deno.serve(async (req) => {
     let userId: string
 
     if (usuarioExistente) {
-      // Usuário já existe na tabela pública — só atualiza o nome
       await supabaseAdmin
         .from("users")
         .update({ fullname })
@@ -105,14 +114,13 @@ Deno.serve(async (req) => {
 
       userId = usuarioExistente.id
     } else {
-      // Monta as credenciais no mesmo padrão do BookingCalendar.tsx (site do cliente)
+      // Mesmo padrão do site do cliente (BookingCalendar.tsx)
       const digits = phone.replace(/\D/g, "")
       const fakeEmail = `${digits}_${companyId}@quadra.app`
       const fakePassword = `quadra_${digits}`
 
       let newUserId: string
 
-      // Tenta criar a conta Auth — pode já existir se o cliente agendou antes pelo site
       const { data: authData, error: authError } = await supabaseAdmin.auth.admin.createUser({
         email: fakeEmail,
         password: fakePassword,
@@ -121,7 +129,7 @@ Deno.serve(async (req) => {
       })
 
       if (authError) {
-        // Usuário já existe no Auth (criado pelo site do cliente) — busca pelo email
+        // Usuário já existe no Auth — localiza pelo fake email
         const { data: listData, error: listError } = await supabaseAdmin.auth.admin.listUsers()
 
         if (listError) {
@@ -151,7 +159,7 @@ Deno.serve(async (req) => {
         newUserId = authData.user.id
       }
 
-      // Insere na tabela pública (só se ainda não existir, evita 409)
+      // Insere na tabela pública (evita 409 caso já exista)
       const { data: existingPublic } = await supabaseAdmin
         .from("users")
         .select("id")
@@ -180,33 +188,37 @@ Deno.serve(async (req) => {
       userId = newUserId
     }
 
-    const { data: booking, error: bookingError } = await supabaseAdmin
-      .from("bookings")
+    // Inserir agendamento fixo
+    const { data: recurring, error: recurringError } = await supabaseAdmin
+      .from("recurring_bookings")
       .insert({
         user_id: userId,
         court_sport_id,
-        booking_start,
-        booking_end,
+        day_of_week,
+        start_time,
+        end_time,
         price,
+        valid_from,
+        valid_until: valid_until ?? null,
       })
       .select()
       .single()
 
-    if (bookingError) {
+    if (recurringError) {
       return new Response(
-        JSON.stringify({ error: "Erro ao criar agendamento: " + bookingError.message }),
+        JSON.stringify({ error: "Erro ao criar agendamento fixo: " + recurringError.message }),
         { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       )
     }
 
     return new Response(
-      JSON.stringify({ booking }),
+      JSON.stringify({ recurring }),
       { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     )
 
-  } catch (err) {
+  } catch (err: unknown) {
     return new Response(
-      JSON.stringify({ error: "Erro inesperado: " + err }),
+      JSON.stringify({ error: "Erro inesperado", detail: String(err) }),
       { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
     )
   }
