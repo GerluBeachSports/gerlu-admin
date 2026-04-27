@@ -66,8 +66,8 @@ export function useRecurringNoMes(dataSelecionada: CalendarDate) {
         if (dataISO < rb.valid_from) continue
         if (rb.valid_until && dataISO > rb.valid_until) continue
 
-        const [sh, sm] = rb.start_time.split(":").map(Number)
-        const [eh, em] = rb.end_time.split(":").map(Number)
+        const [sh, _sm] = rb.start_time.split(":").map(Number)
+        const [_eh, _em] = rb.end_time.split(":").map(Number)
 
         const bookingStart = `${dataISO}T${rb.start_time}`
         const bookingEnd = `${dataISO}T${rb.end_time}`
