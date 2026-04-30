@@ -87,8 +87,8 @@ export function useFinanceiroQuadrasAnual(yearAnual: number) {
         }),
       ]);
 
-      console.log("anualRes:", anualRes)
-      console.log("anualEsportesRes:", anualEsportesRes)
+      //console.log("anualRes:", anualRes)
+      //console.log("anualEsportesRes:", anualEsportesRes)
 
       if (!anualRes.error)         setAnual(anualRes.data ?? []);
       if (!anualEsportesRes.error) setAnualPorEsporte(anualEsportesRes.data ?? []);
