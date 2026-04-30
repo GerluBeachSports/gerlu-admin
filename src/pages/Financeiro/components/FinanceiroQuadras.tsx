@@ -142,6 +142,8 @@ function SecaoMensal({ monthIdx, year }: { monthIdx: number; year: number }) {
 const SecaoAnual = memo(function SecaoAnual({ displayYear }: { displayYear: number }) {
   const { anual, anualPorEsporte } = useFinanceiroQuadrasAnual(displayYear);
 
+  const semDados = anual.length === 0 && anualPorEsporte.length === 0;
+
   const stackedData = useMemo(() => {
     const map: Record<string, Record<string, number | string>> = {};
     anualPorEsporte.forEach(({ mes, esporte, agendamentos }: MesEsporteData) => {
@@ -156,23 +158,31 @@ const SecaoAnual = memo(function SecaoAnual({ displayYear }: { displayYear: numb
     [anualPorEsporte]
   );
 
+  const Vazio = () => (
+    <div className="flex items-center justify-center h-[200px] text-gray-300 text-sm">
+      Sem informações para esta data
+    </div>
+  );
+
   return (
     <div className="grid grid-cols-3 gap-5">
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
         <p className="text-sm font-semibold text-gray-700 text-center mb-5">Agendamentos de esportes por mês</p>
-        <ResponsiveContainer width="100%" height={200}>
-          <BarChart data={stackedData} barSize={20}>
-            <XAxis dataKey="mes" tick={{ fontSize: 9, fill: "#9ca3af" }} axisLine={false} tickLine={false} />
-            <YAxis tick={{ fontSize: 9, fill: "#9ca3af" }} axisLine={false} tickLine={false} />
-            <Tooltip contentStyle={{ borderRadius: 8, fontSize: 11 }} />
-            {sportKeys.map((key, i) => (
-              <Bar key={key} dataKey={key} stackId="a"
-                fill={SPORT_COLORS[key] ?? "#ccc"}
-                radius={i === sportKeys.length - 1 ? [4, 4, 0, 0] : [0, 0, 0, 0]}
-              />
-            ))}
-          </BarChart>
-        </ResponsiveContainer>
+        {semDados ? <Vazio /> : (
+          <ResponsiveContainer width="100%" height={200}>
+            <BarChart data={stackedData} barSize={20}>
+              <XAxis dataKey="mes" tick={{ fontSize: 9, fill: "#9ca3af" }} axisLine={false} tickLine={false} />
+              <YAxis tick={{ fontSize: 9, fill: "#9ca3af" }} axisLine={false} tickLine={false} />
+              <Tooltip contentStyle={{ borderRadius: 8, fontSize: 11 }} />
+              {sportKeys.map((key, i) => (
+                <Bar key={key} dataKey={key} stackId="a"
+                  fill={SPORT_COLORS[key] ?? "#ccc"}
+                  radius={i === sportKeys.length - 1 ? [4, 4, 0, 0] : [0, 0, 0, 0]}
+                />
+              ))}
+            </BarChart>
+          </ResponsiveContainer>
+        )}
         <div className="flex flex-wrap gap-x-3 gap-y-1 mt-3 justify-center">
           {sportKeys.map(k => (
             <div key={k} className="flex items-center gap-1.5 text-[10px] text-gray-500">
@@ -185,36 +195,39 @@ const SecaoAnual = memo(function SecaoAnual({ displayYear }: { displayYear: numb
 
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
         <p className="text-sm font-semibold text-gray-700 text-center mb-5">Faturamento por mês</p>
-        <ResponsiveContainer width="100%" height={200}>
-          <BarChart data={anual} barSize={24}>
-            <XAxis dataKey="mes" tick={{ fontSize: 9, fill: "#9ca3af" }} axisLine={false} tickLine={false} />
-            <YAxis tick={{ fontSize: 9, fill: "#9ca3af" }} axisLine={false} tickLine={false}
-              tickFormatter={(v: number) => `R$${(v / 1000).toFixed(0)}k`} />
-            <Tooltip content={<CustomTooltip prefix="R$ " />} />
-            <Bar dataKey="faturamento" radius={[5, 5, 0, 0]}>
-              {(anual as MesData[]).map((_, i) => <Cell key={i} fill={i === anual.length - 1 ? "#1d4ed8" : "#2563eb"} />)}
-            </Bar>
-          </BarChart>
-        </ResponsiveContainer>
+        {semDados ? <Vazio /> : (
+          <ResponsiveContainer width="100%" height={200}>
+            <BarChart data={anual} barSize={24}>
+              <XAxis dataKey="mes" tick={{ fontSize: 9, fill: "#9ca3af" }} axisLine={false} tickLine={false} />
+              <YAxis tick={{ fontSize: 9, fill: "#9ca3af" }} axisLine={false} tickLine={false}
+                tickFormatter={(v: number) => `R$${(v / 1000).toFixed(0)}k`} />
+              <Tooltip content={<CustomTooltip prefix="R$ " />} />
+              <Bar dataKey="faturamento" radius={[5, 5, 0, 0]}>
+                {(anual as MesData[]).map((_, i) => <Cell key={i} fill={i === anual.length - 1 ? "#1d4ed8" : "#2563eb"} />)}
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        )}
       </div>
 
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
         <p className="text-sm font-semibold text-gray-700 text-center mb-5">Agendamentos por mês</p>
-        <ResponsiveContainer width="100%" height={200}>
-          <BarChart data={anual} barSize={24}>
-            <XAxis dataKey="mes" tick={{ fontSize: 9, fill: "#9ca3af" }} axisLine={false} tickLine={false} />
-            <YAxis tick={{ fontSize: 9, fill: "#9ca3af" }} axisLine={false} tickLine={false} />
-            <Tooltip content={<CustomTooltip suffix="" />} />
-            <Bar dataKey="agendamentos" radius={[5, 5, 0, 0]}>
-              {(anual as MesData[]).map((_, i) => <Cell key={i} fill={i === anual.length - 1 ? "#1d4ed8" : "#2563eb"} />)}
-            </Bar>
-          </BarChart>
-        </ResponsiveContainer>
+        {semDados ? <Vazio /> : (
+          <ResponsiveContainer width="100%" height={200}>
+            <BarChart data={anual} barSize={24}>
+              <XAxis dataKey="mes" tick={{ fontSize: 9, fill: "#9ca3af" }} axisLine={false} tickLine={false} />
+              <YAxis tick={{ fontSize: 9, fill: "#9ca3af" }} axisLine={false} tickLine={false} />
+              <Tooltip content={<CustomTooltip suffix="" />} />
+              <Bar dataKey="agendamentos" radius={[5, 5, 0, 0]}>
+                {(anual as MesData[]).map((_, i) => <Cell key={i} fill={i === anual.length - 1 ? "#1d4ed8" : "#2563eb"} />)}
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        )}
       </div>
     </div>
   );
 });
-
 // ── Main ──────────────────────────────────────────────────────────────────────
 export function FinanceiroQuadras() {
   const now = new Date();

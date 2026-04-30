@@ -140,38 +140,50 @@ function SecaoMensal({ monthIdx, year }: { monthIdx: number; year: number }) {
 const SecaoAnual = memo(function SecaoAnual({ displayYear }: { displayYear: number }) {
   const { anual, anualSegmentado } = useFinanceiroGeralAnual(displayYear);
 
+  const semDados = anual.length === 0 && anualSegmentado.length === 0;
+
+  const Vazio = () => (
+    <div className="flex items-center justify-center h-[200px] text-gray-300 text-sm">
+      Sem informações para esta data
+    </div>
+  );
+
   return (
     <div className="grid grid-cols-2 gap-5">
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
         <p className="text-sm font-semibold text-gray-700 text-center mb-5">Faturamento Total por Mês</p>
-        <ResponsiveContainer width="100%" height={200}>
-          <BarChart data={anual} barSize={28}>
-            <XAxis dataKey="mes" tick={{ fontSize: 10, fill: "#9ca3af" }} axisLine={false} tickLine={false} />
-            <YAxis tick={{ fontSize: 9, fill: "#9ca3af" }} axisLine={false} tickLine={false}
-              tickFormatter={(v: number) => `R$${(v / 1000).toFixed(0)}k`} />
-            <Tooltip content={<CustomTooltip prefix="R$ " />} />
-            <Bar dataKey="total" radius={[5, 5, 0, 0]}>
-              {(anual as GeralMesData[]).map((_, i) => (
-                <Cell key={i} fill={i === anual.length - 1 ? "#1d4ed8" : "#2563eb"} />
-              ))}
-            </Bar>
-          </BarChart>
-        </ResponsiveContainer>
+        {semDados ? <Vazio /> : (
+          <ResponsiveContainer width="100%" height={200}>
+            <BarChart data={anual} barSize={28}>
+              <XAxis dataKey="mes" tick={{ fontSize: 10, fill: "#9ca3af" }} axisLine={false} tickLine={false} />
+              <YAxis tick={{ fontSize: 9, fill: "#9ca3af" }} axisLine={false} tickLine={false}
+                tickFormatter={(v: number) => `R$${(v / 1000).toFixed(0)}k`} />
+              <Tooltip content={<CustomTooltip prefix="R$ " />} />
+              <Bar dataKey="total" radius={[5, 5, 0, 0]}>
+                {(anual as GeralMesData[]).map((_, i) => (
+                  <Cell key={i} fill={i === anual.length - 1 ? "#1d4ed8" : "#2563eb"} />
+                ))}
+              </Bar>
+            </BarChart>
+          </ResponsiveContainer>
+        )}
       </div>
 
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
         <p className="text-sm font-semibold text-gray-700 text-center mb-1">Faturamento Total por Mês</p>
         <p className="text-xs text-gray-400 text-center mb-4">Segmentos</p>
-        <ResponsiveContainer width="100%" height={200}>
-          <BarChart data={anualSegmentado} barSize={20}>
-            <XAxis dataKey="mes" tick={{ fontSize: 10, fill: "#9ca3af" }} axisLine={false} tickLine={false} />
-            <YAxis tick={{ fontSize: 9, fill: "#9ca3af" }} axisLine={false} tickLine={false}
-              tickFormatter={(v: number) => `R$${(v / 1000).toFixed(0)}k`} />
-            <Tooltip content={<CustomTooltip prefix="R$ " />} />
-            <Bar dataKey="quadras" name="Quadras" stackId="a" fill="#1e3a5f" radius={[0, 0, 0, 0]} />
-            <Bar dataKey="comandas" name="Comandas" stackId="a" fill="#f59e0b" radius={[4, 4, 0, 0]} />
-          </BarChart>
-        </ResponsiveContainer>
+        {semDados ? <Vazio /> : (
+          <ResponsiveContainer width="100%" height={200}>
+            <BarChart data={anualSegmentado} barSize={20}>
+              <XAxis dataKey="mes" tick={{ fontSize: 10, fill: "#9ca3af" }} axisLine={false} tickLine={false} />
+              <YAxis tick={{ fontSize: 9, fill: "#9ca3af" }} axisLine={false} tickLine={false}
+                tickFormatter={(v: number) => `R$${(v / 1000).toFixed(0)}k`} />
+              <Tooltip content={<CustomTooltip prefix="R$ " />} />
+              <Bar dataKey="quadras" name="Quadras" stackId="a" fill="#1e3a5f" radius={[0, 0, 0, 0]} />
+              <Bar dataKey="comandas" name="Comandas" stackId="a" fill="#f59e0b" radius={[4, 4, 0, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+        )}
         <div className="flex justify-center gap-5 mt-3">
           <div className="flex items-center gap-1.5 text-xs text-gray-500">
             <div className="w-3 h-3 rounded-sm bg-[#1e3a5f]" /> Quadras

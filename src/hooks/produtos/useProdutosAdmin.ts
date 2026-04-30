@@ -43,6 +43,8 @@ export function useProdutosAdmin() {
 
     if (insertError) {
       setError('Erro ao criar produto.')
+      console.error('Erro completo:', insertError) // 👈 adiciona isso
+      setError(`Erro: ${insertError.message}`) 
       setSalvando(false)
       return false
     }

@@ -77,9 +77,18 @@ export function useFinanceiroQuadrasAnual(yearAnual: number) {
   useEffect(() => {
     async function buscar() {
       const [anualRes, anualEsportesRes] = await Promise.all([
-        supabase.rpc("get_quadras_anual",          { p_ano: yearAnual }),
-        supabase.rpc("get_quadras_anual_esportes", { p_ano: yearAnual }),
+        supabase.rpc("get_quadras_anual", { 
+          p_ano: yearAnual, 
+          p_company_id: COMPANY_ID  // 👈 adiciona isso
+        }),
+        supabase.rpc("get_quadras_anual_esportes", { 
+          p_ano: yearAnual,
+          p_company_id: COMPANY_ID  // 👈 verifica se essa também precisa
+        }),
       ]);
+
+      console.log("anualRes:", anualRes)
+      console.log("anualEsportesRes:", anualEsportesRes)
 
       if (!anualRes.error)         setAnual(anualRes.data ?? []);
       if (!anualEsportesRes.error) setAnualPorEsporte(anualEsportesRes.data ?? []);
